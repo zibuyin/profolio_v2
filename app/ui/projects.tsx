@@ -15,7 +15,7 @@ export default function Projects() {
                             safe and easy to use, and capable of remote monitoring. Made
                             using 3D-printing technology and environmentally friendly
                             LA material"
-				url="/"
+				url="/pages/automaticMedicationDispenser"
 			/>
 		</div>
 	);

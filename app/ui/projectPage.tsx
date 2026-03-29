@@ -3,8 +3,18 @@
 // Renderer for each projects page, responsible for md -> html and margins & paddings
 import Markdown from "react-markdown";
 import { useState, useEffect } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCircleArrowLeft } from "@fortawesome/free-solid-svg-icons";
+import { useRouter } from "next/navigation";
+
 export default function ProjectPage() {
 	const [content, setContent] = useState<string>("");
+	const [isMounted, setIsMounted] = useState(false);
+	const router = useRouter();
+
+	useEffect(() => {
+		setIsMounted(true);
+	}, []);
 
 	// Fetch md
 	useEffect(() => {
@@ -14,8 +24,19 @@ export default function ProjectPage() {
 	}, []);
 
 	return (
-		<div>
-			<div className="pl-[10vw] pr-[10vw] pt-[200px] h-screen">
+		<div className="pl-[10vw] pr-[10vw] h-scree">
+			<div className="back-btn mt-10  w-fit h-fit:">
+				{isMounted && (
+					<FontAwesomeIcon
+						icon={faCircleArrowLeft}
+						size="xl"
+						className=" hover:text-gray-400 transition-colors duration-200 cursor-pointer"
+						onClick={() => router.push("/")}
+					/>
+				)}
+			</div>
+
+			<div className=" pt-[130px]">
 				<h1 className="title text-5xl font-bold mb-1.5">
 					Automatic Medication Dispenser
 				</h1>
