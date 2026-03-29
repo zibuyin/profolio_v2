@@ -1,7 +1,7 @@
 const config = {
   plugins: {
     "@tailwindcss/postcss": {
-      darkmode: 'media'
+      darkMode: 'media'
     },
   },
 };
