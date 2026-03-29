@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Gallery from "./ui/gallery";
+import Projects from "./ui/projects";
 
 export default function Home() {
 	return (
@@ -20,9 +21,7 @@ export default function Home() {
 					</div>
 				</div>
 
-				<div className="projects-section">
-					<h1 className="text-6xl font-bold">Projects</h1>
-				</div>
+				<Projects></Projects>
 			</main>
 		</div>
 	);
