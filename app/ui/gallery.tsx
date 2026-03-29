@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 
 export default function Gallery() {
 	const [imageList, setImageList] = useState<string[]>([]);

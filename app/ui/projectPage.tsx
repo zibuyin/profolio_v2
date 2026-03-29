@@ -1,0 +1,99 @@
+"use client";
+
+// Renderer for each projects page, responsible for md -> html and margins & paddings
+import Markdown from "react-markdown";
+import { useState, useEffect } from "react";
+export default function ProjectPage() {
+	const [content, setContent] = useState<string>("");
+
+	// Fetch md
+	useEffect(() => {
+		fetch("/projects/md/automaticMedicationDispenser.md")
+			.then((res) => res.text())
+			.then((text) => setContent(text));
+	}, []);
+
+	return (
+		<div>
+			<div className="pl-[10vw] pr-[10vw] pt-[200px] h-screen">
+				<h1 className="title text-5xl font-bold mb-1.5">
+					Automatic Medication Dispenser
+				</h1>
+				<h2 className="date text-xl font-bold">
+					March 29, 2026 • Nathan Yin
+				</h2>
+				<div className="bg-gray-500 w-full h-[1px] mt-3 mb-5"></div>
+				<Markdown
+					components={{
+						h1: (props) => (
+							<h1
+								className="text-5xl font-bold  mb-4"
+								{...props}
+							/>
+						),
+						h2: (props) => (
+							<h2
+								className="text-2xl font-semibold  mb-3"
+								{...props}
+							/>
+						),
+						h3: (props) => (
+							<h3
+								className="text-xl font-semibold text-gray-700 mb-2"
+								{...props}
+							/>
+						),
+						p: (props) => (
+							<p className="mb-4 leading-relaxed" {...props} />
+						),
+						ul: (props) => (
+							<ul className="list-disc ml-8 mb-4" {...props} />
+						),
+						ol: (props) => (
+							<ol className="list-decimal ml-8 mb-4" {...props} />
+						),
+						li: (props) => <li className="mb-1" {...props} />,
+						a: (props) => (
+							<a
+								className="text-blue-600 underline hover:text-blue-800"
+								{...props}
+							/>
+						),
+						code: (props) => (
+							<code
+								className="bg-gray-100 px-1 py-0.5 rounded text-sm font-mono"
+								{...props}
+							/>
+						),
+						pre: (props) => (
+							<pre
+								className="bg-gray-900 text-white p-4 rounded mb-4 overflow-x-auto"
+								{...props}
+							/>
+						),
+						blockquote: (props) => (
+							<blockquote
+								className="border-l-4 border-gray-400 pl-4 italic text-gray-600 bg-gray-50 my-4 py-2"
+								{...props}
+							/>
+						),
+						img: (props) => (
+							<img
+								className="max-w-full rounded my-4"
+								{...props}
+							/>
+						),
+						hr: (props) => (
+							<hr
+								className="border-t border-gray-300 my-8"
+								{...props}
+							/>
+						),
+					}}
+				>
+					{content}
+				</Markdown>
+			</div>
+		</div>
+	);
+}
