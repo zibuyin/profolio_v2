@@ -26,10 +26,10 @@ function Box({ path }: { path: string }) {
 
 export default function Model({ path }: ModelProps) {
 	return (
-		<div className="w-200px h-300px">
+		<div className="w-400px h-400px">
 			<Canvas
 				camera={{ position: [0, 1, 5] }}
-				style={{ borderRadius: 12, width: "100%", height: "300px" }}
+				style={{ borderRadius: 12, width: "700px", height: "300px" }}
 			>
 				<ambientLight intensity={0.7} />
 				<directionalLight

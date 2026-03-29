@@ -1,0 +1,14 @@
+{
+    "WelcomeSection" : {
+        "title": "殷子布",
+        "subtitle": "工程师 • 程序员 • 先行者"
+    },
+    "ProjectsSection": {
+        "title": "我的项目",
+        "btn_label": "进一步了解"
+    },
+    "ProjectCards": {
+        "title_1": "全自动药品投放器",
+        "description_1": "在预设的时间准确的投放药品，不仅安全且便于使用。支持远程监测与控制，采用3D打印技术和环保的PLA材料制造"
+    }
+}

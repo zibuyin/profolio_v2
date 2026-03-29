@@ -1,4 +1,4 @@
-import ProjectPage from "@/app/ui/projectPage";
+import ProjectPage from "@/src/app/ui/projectPage";
 
 export default function AutomaticMedicationDispenser() {
 	return (
