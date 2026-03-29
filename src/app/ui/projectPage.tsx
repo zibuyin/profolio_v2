@@ -133,7 +133,7 @@ export default function ProjectPage({
 						),
 						img: (props) => (
 							<img
-								className="max-w-full rounded my-4"
+								className="max-w-full rounded my-4 w-[30vw]"
 								{...props}
 							/>
 						),

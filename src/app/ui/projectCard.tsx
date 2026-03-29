@@ -22,7 +22,7 @@ export default function ProjectCard({
 	const t = useTranslations("ProjectsSection");
 	return (
 		<div>
-			<div className="flex justify-between">
+			<div className="flex flex-col xl:flex-row justify-between">
 				<div className="text-section">
 					<h2 className="text-3xl font-semibold">{title}</h2>
 					<p className="mt-2 mr-35">{description}</p>

@@ -4,7 +4,7 @@ import { useTranslations } from "next-intl";
 const iconSize = 42;
 function ProgrammingIcons() {
 	return (
-		<div className="tools-list mt-3 flex gap-5">
+		<div className="tools-list mt-3 flex gap-5 flex-wrap">
 			<img
 				height={iconSize}
 				width={iconSize}
@@ -91,7 +91,7 @@ function ProgrammingIcons() {
 
 function EngineeringIcons() {
 	return (
-		<div className="tools-list mt-3 flex gap-5">
+		<div className="tools-list mt-3 flex gap-5 flex-wrap">
 			<img height={iconSize} width={iconSize} src="/images/onshape.png" />
 			<img
 				height={iconSize}

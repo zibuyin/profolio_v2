@@ -18,4 +18,4 @@ counts and dispenses pills accurately at scheduled times. It will be safe and
 easy to use, and capable of remote monitoring, so caregivers can track
 medication intake and receive alerts for issues like low pill levels.
 
-![placeholder](/projects/assets/pfp.png)
+![placeholder](/projects/assets/medDispenser.png)
