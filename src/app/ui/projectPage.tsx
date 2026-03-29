@@ -14,29 +14,6 @@ interface ProjectPageProps {
 	mdPath: string;
 }
 
-// Function to get current scroll distances
-function getScrollDistance() {
-	// For cross-browser compatibility, use both documentElement and body
-	const scrollTop =
-		window.pageYOffset ||
-		document.documentElement.scrollTop ||
-		document.body.scrollTop ||
-		0;
-	const scrollLeft =
-		window.pageXOffset ||
-		document.documentElement.scrollLeft ||
-		document.body.scrollLeft ||
-		0;
-
-	return { x: scrollLeft, y: scrollTop };
-}
-
-// Example: Track scroll distance in real-time
-window.addEventListener("scroll", () => {
-	const { x, y } = getScrollDistance();
-	console.log(`Scrolled: X = ${x}px, Y = ${y}px`);
-});
-
 export default function ProjectPage({
 	title,
 	date,
@@ -59,7 +36,7 @@ export default function ProjectPage({
 	}, []);
 
 	return (
-		<div className="pl-[10vw] pr-[10vw] h-scree">
+		<div className="pl-[27vw] pr-[27vw] h-scree">
 			<div className="back-btn mt-10  w-fit h-fit:">
 				{isMounted && (
 					<FontAwesomeIcon
@@ -133,7 +110,7 @@ export default function ProjectPage({
 						),
 						img: (props) => (
 							<img
-								className="max-w-full rounded my-4 w-[30vw]"
+								className="max-w-full rounded-2xl my-4 w-[90%] mx-auto"
 								{...props}
 							/>
 						),

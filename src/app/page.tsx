@@ -1,27 +1,63 @@
+"use client";
+
 import Image from "next/image";
 import Gallery from "./ui/gallery";
 import Projects from "./ui/projects";
 import Welcome from "./ui/welcome";
 import AboutMe from "./ui/aboutMe";
 import ScrollIndicator from "./components/scrollDownIndicator";
+import ScrollReveal from "./components/ScrollReveal";
+import Footer from "./components/footer";
+
+let currentY = 0;
+// Function to get current scroll distances
+function getScrollDistance() {
+	// For cross-browser compatibility, use both documentElement and body
+	const scrollTop =
+		window.pageYOffset ||
+		document.documentElement.scrollTop ||
+		document.body.scrollTop ||
+		0;
+	const scrollLeft =
+		window.pageXOffset ||
+		document.documentElement.scrollLeft ||
+		document.body.scrollLeft ||
+		0;
+
+	return { x: scrollLeft, y: scrollTop };
+}
+
+window.addEventListener("scroll", () => {
+	const { x, y } = getScrollDistance();
+	console.log(`Scrolled: X = ${x}px, Y = ${y}px`);
+
+	if (window.location.pathname == "/") {
+		currentY = y;
+		console.log("is root");
+	}
+});
+
+// window.addEventListener("onRouteChangeComplete", () => {
+// 	console.log(currentY);
+// window.scrollTo(0, 1000);
+// });
 
 export default function Home() {
 	return (
-		<div className="flex flex-col flex-1 justify-center pl-[15vw] pr-[15vw] bg-zinc-50 font-sans dark:bg-black">
+		<div className="flex flex-col flex-1 justify-center pl-[15vw] pr-[15vw] bg-zinc-50 font-sans dark:bg-[#0a0a0a]">
 			<main>
 				<div className="fixed inset-0 flex items-center justify-center">
 					{/* <ScrollIndicator></ScrollIndicator> */}
 					<Welcome></Welcome>
 				</div>
 				{/* 60/40 ratio for making to transparent before moving, */}
-				<div className="pt-[60vh] mt-[40vh] bg-gradient-to-b from-transparent via-black to-black dark:via-black dark:to-black via-zinc-50 to-zinc-50 z-10 relative">
+				<div className="pt-[60vh] mt-[40vh] bg-gradient-to-b from-transparent via-[#0a0a0a] to-[#0a0a0a] dark:via-[#0a0a0a] dark:to-[#0a0a0a] via-zinc-50 to-zinc-50 z-10 relative">
 					<Projects></Projects>
 					{/* Small padding */}
 					<div className="h-30"></div>
 					<AboutMe></AboutMe>
 				</div>
 			</main>
-			<footer className="h-[5vh] w-full bg-zinc-50 dark:bg-black z-888"></footer>
 		</div>
 	);
 }

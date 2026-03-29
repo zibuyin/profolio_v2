@@ -27,7 +27,7 @@ export default function ProjectCard({
 					<h2 className="text-3xl font-semibold">{title}</h2>
 					<p className="mt-2 mr-35">{description}</p>
 					<button
-						className="bg-blue-700 hover:bg-blue-600 p-1 pr-1.5 pl-1.5 mt-3 rounded-full font-medium text-white"
+						className="bg-blue-700 hover:bg-blue-600 p-2 pr-3 pl-3 mt-3 rounded-full font-medium text-white"
 						onClick={() => router.push(url)}
 					>
 						{t("btn_label")}

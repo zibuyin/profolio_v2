@@ -26,4 +26,8 @@ body {
     'Hiragino Sans GB', 'Microsoft YaHei', 'STHeiti', 'SimSun', 'WenQuanYi Micro Hei';
 }
 
+footer {
+  background-color: var(--background);
+}
+
 /* , Arial, Helvetica, sans-serif */

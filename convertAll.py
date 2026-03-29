@@ -4,9 +4,9 @@ from pathlib import Path
 import os
 import subprocess as sp
 
-gallery_path = Path("public/gallery")
+gallery_path = Path("public/projects/assets")
 
-for heic_file in gallery_path.glob("*.heic"):
+for heic_file in gallery_path.glob("*.HEIC"):
     png_file = heic_file.with_suffix(".png")
     sp.run(["magick", str(heic_file), str(png_file)], check=True)
     print(f"✓ {png_file.name}")

@@ -131,7 +131,7 @@ export default function AboutMe() {
 				Here are some tools that I use for programming
 			</p>
 			<ProgrammingIcons></ProgrammingIcons>
-			<h3 className="text-xl font-bold mt-5">And for Engineering</h3>
+			<h3 className="text-xl font-bold mt-5">And for engineering</h3>
 
 			<EngineeringIcons></EngineeringIcons>
 		</div>
