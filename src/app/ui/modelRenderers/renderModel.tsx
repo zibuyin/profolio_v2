@@ -4,6 +4,7 @@ import { useGLTF } from "@react-three/drei";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { useRef } from "react";
 import { Mesh } from "three";
+import { OrbitControls } from "@react-three/drei";
 
 interface ModelProps {
 	path: string;
@@ -12,10 +13,6 @@ interface ModelProps {
 function Box({ path }: { path: string }) {
 	const meshRef = useRef<Mesh>(null!);
 	const { scene } = useGLTF(path);
-
-	useFrame(() => {
-		meshRef.current.rotation.y += 0.005;
-	});
 
 	return (
 		<mesh receiveShadow ref={meshRef} scale={25}>
@@ -28,8 +25,8 @@ export default function Model({ path }: ModelProps) {
 	return (
 		<div className="w-400px h-400px">
 			<Canvas
-				camera={{ position: [0, 1, 5] }}
-				style={{ borderRadius: 12, width: "700px", height: "300px" }}
+				camera={{ position: [4, 2, 4] }}
+				style={{ borderRadius: 12, width: "400px", height: "280px" }}
 			>
 				<ambientLight intensity={0.7} />
 				<directionalLight
@@ -43,6 +40,11 @@ export default function Model({ path }: ModelProps) {
 					color="#b0b0b0"
 				/>
 				<Box path={path} />
+				<OrbitControls
+					enableZoom={true}
+					dampingFactor={0.2}
+					enableDamping={true}
+				/>
 			</Canvas>
 		</div>
 	);

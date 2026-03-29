@@ -7,7 +7,42 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { useRouter } from "next/navigation";
 
-export default function ProjectPage() {
+interface ProjectPageProps {
+	title: string;
+	date: string;
+	author: string;
+	mdPath: string;
+}
+
+// Function to get current scroll distances
+function getScrollDistance() {
+	// For cross-browser compatibility, use both documentElement and body
+	const scrollTop =
+		window.pageYOffset ||
+		document.documentElement.scrollTop ||
+		document.body.scrollTop ||
+		0;
+	const scrollLeft =
+		window.pageXOffset ||
+		document.documentElement.scrollLeft ||
+		document.body.scrollLeft ||
+		0;
+
+	return { x: scrollLeft, y: scrollTop };
+}
+
+// Example: Track scroll distance in real-time
+window.addEventListener("scroll", () => {
+	const { x, y } = getScrollDistance();
+	console.log(`Scrolled: X = ${x}px, Y = ${y}px`);
+});
+
+export default function ProjectPage({
+	title,
+	date,
+	author,
+	mdPath,
+}: ProjectPageProps) {
 	const [content, setContent] = useState<string>("");
 	const [isMounted, setIsMounted] = useState(false);
 	const router = useRouter();
@@ -18,7 +53,7 @@ export default function ProjectPage() {
 
 	// Fetch md
 	useEffect(() => {
-		fetch("/projects/md/automaticMedicationDispenser.md")
+		fetch(`/projects/md/${mdPath}`)
 			.then((res) => res.text())
 			.then((text) => setContent(text));
 	}, []);
@@ -37,11 +72,9 @@ export default function ProjectPage() {
 			</div>
 
 			<div className=" pt-[130px]">
-				<h1 className="title text-5xl font-bold mb-1.5">
-					Automatic Medication Dispenser
-				</h1>
+				<h1 className="title text-5xl font-bold mb-1.5">{title}</h1>
 				<h2 className="date text-xl font-bold">
-					March 29, 2026 • Nathan Yin
+					{date} • {author}
 				</h2>
 				<div className="bg-gray-500 w-full h-[1px] mt-3 mb-5"></div>
 				<Markdown

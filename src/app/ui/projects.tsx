@@ -15,6 +15,12 @@ export default function Projects() {
 				description={t("description_1")}
 				url="/pages/automaticMedicationDispenser"
 			/>
+			<ProjectCard
+				title="Secure Chat Site"
+				description="A basic messaging client that sends and recieves messages via socket.io. Encrypted using AES with secure key exchange, supports moderation and chat filters"
+				url="/"
+				imagePath="https://raw.githubusercontent.com/snej55/chat_site/refs/heads/main/media/screenshot_2.png"
+			/>
 		</div>
 	);
 }
