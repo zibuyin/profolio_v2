@@ -9,7 +9,7 @@ export default function ScrollIndicator() {
 			<FontAwesomeIcon
 				icon={faAngleDown}
 				bounce
-				className="w-50 h-50 justify-self-center scale-200"
+				className="justify-self-center scale-200"
 			/>
 		</div>
 	);
