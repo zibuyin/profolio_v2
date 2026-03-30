@@ -11,6 +11,8 @@ forgets to take her medication on time, putting her health at serious risk.
 Existing products on the market are often expensive, making them
 inaccessible to many people who need them most.
 
+![Old man eating pills (https://www.Vecteezy.com) ](/projects/assets/oldManEatingPills.jpg)
+
 ## Project Aim
 
 The aim of this project is to design an aﬀordable automatic pill dispenser that
@@ -18,4 +20,4 @@ counts and dispenses pills accurately at scheduled times. It will be safe and
 easy to use, and capable of remote monitoring, so caregivers can track
 medication intake and receive alerts for issues like low pill levels.
 
-![placeholder](/projects/assets/medDispenserWide.png)
+![3D Printed automatic pill dispenser](/projects/assets/medDispenserWide.png)
