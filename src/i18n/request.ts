@@ -1,33 +1,16 @@
-import { getRequestConfig } from 'next-intl/server';
-import { headers } from 'next/headers';
+import { getRequestConfig } from "next-intl/server";
 
-const supportedLocales = ['en', 'zh'] as const;
-type Locale = (typeof supportedLocales)[number];
-const defaultLocale: Locale = 'en';
+import enMessages from "../../messages/en.json";
+import zhMessages from "../../messages/zh.json";
 
-function detectLocale(acceptLanguage: string): Locale {
-  const languages = acceptLanguage
-    .split(',')
-    .map((lang) => lang.split(';')[0].trim().toLowerCase());
+const messages = {
+	en: enMessages,
+	zh: zhMessages,
+} as const;
 
-  for (const lang of languages) {
-    const base = lang.split('-')[0] as Locale;
-    if (supportedLocales.includes(base)) {
-      return base;
-    }
-  }
+const defaultLocale = "en" as const;
 
-  return defaultLocale;
-}
-
-export default getRequestConfig(async () => {
-  const headersObj = await headers(); // ✅ await here
-  const acceptLanguage = headersObj.get('accept-language') ?? '';
-
-  const locale = detectLocale(acceptLanguage);
-
-  return {
-    locale,
-    messages: (await import(`../../messages/${locale}.json`)).default
-  };
-});
+export default getRequestConfig(async () => ({
+	locale: defaultLocale,
+	messages: messages[defaultLocale],
+}));
