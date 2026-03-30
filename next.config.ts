@@ -1,10 +1,13 @@
 const { execSync } = require("child_process");
+const createNextIntlPlugin = require("next-intl/plugin");
 
 const gitHash = execSync("git rev-parse --short HEAD")
   .toString()
   .trim();
 
-module.exports = {
+const withNextIntl = createNextIntlPlugin("./src/i18n/request.ts");
+
+module.exports = withNextIntl({
   output: "export",
   images: {
     unoptimized: true,
@@ -17,4 +20,4 @@ module.exports = {
   env: {
     NEXT_PUBLIC_GIT_HASH: gitHash,
   },
-};
+});
