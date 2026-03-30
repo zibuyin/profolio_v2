@@ -13,12 +13,12 @@ export default function Projects() {
 				title={t("title_1")}
 				modelPath="models/medicationDispenser.gltf"
 				description={t("description_1")}
-				url="/pages/automaticMedicationDispenser"
+				url="automaticMedicationDispenser"
 			/>
 			<ProjectCard
-				title="Secure Chat Site"
+				title="Secure Chat Site [WIP]"
 				description="A basic messaging client that sends and recieves messages via socket.io. Encrypted using AES with secure key exchange, supports moderation and chat filters"
-				url="/"
+				url="secureChatSite"
 				imagePath="https://raw.githubusercontent.com/snej55/chat_site/refs/heads/main/media/screenshot_2.png"
 			/>
 		</div>

@@ -20,6 +20,7 @@ export default function ProjectCard({
 }: ProjectCardProps) {
 	const router = useRouter();
 	const t = useTranslations("ProjectsSection");
+	const parsedUrl = `pages/projects/${url}`;
 	return (
 		<div>
 			<div className="flex flex-col xl:flex-row justify-between">
@@ -28,7 +29,7 @@ export default function ProjectCard({
 					<p className="mt-2 mr-35">{description}</p>
 					<button
 						className="bg-blue-700 hover:bg-blue-600 p-2 pr-3 pl-3 mt-3 rounded-full font-medium text-white"
-						onClick={() => router.push(url)}
+						onClick={() => router.push(parsedUrl)}
 					>
 						{t("btn_label")}
 					</button>

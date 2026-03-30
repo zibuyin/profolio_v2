@@ -27,15 +27,15 @@ function getScrollDistance() {
 	return { x: scrollLeft, y: scrollTop };
 }
 
-window.addEventListener("scroll", () => {
-	const { x, y } = getScrollDistance();
-	console.log(`Scrolled: X = ${x}px, Y = ${y}px`);
+// window.addEventListener("scroll", () => {
+// 	const { x, y } = getScrollDistance();
+// 	console.log(`Scrolled: X = ${x}px, Y = ${y}px`);
 
-	if (window.location.pathname == "/") {
-		currentY = y;
-		console.log("is root");
-	}
-});
+// 	if (window.location.pathname == "/") {
+// 		currentY = y;
+// 		console.log("is root");
+// 	}
+// });
 
 // window.addEventListener("onRouteChangeComplete", () => {
 // 	console.log(currentY);
