@@ -1,19 +1,20 @@
-import { NextConfig } from 'next';
-import createNextIntlPlugin from 'next-intl/plugin';
-
-// Get git hash
 const { execSync } = require("child_process");
+
 const gitHash = execSync("git rev-parse --short HEAD")
   .toString()
   .trim();
 
-const nextConfig: NextConfig = {
+module.exports = {
+  output: "export",
+  images: {
+    unoptimized: true,
+  },
+
+  // GitHub Pages static deployment
+  basePath: "/profolio_v2",
+  assetPrefix: "/profolio_v2/",
+  trailingSlash: true,
   env: {
     NEXT_PUBLIC_GIT_HASH: gitHash,
   },
 };
-
-const withNextIntl = createNextIntlPlugin();
-export default withNextIntl(nextConfig);
-
-

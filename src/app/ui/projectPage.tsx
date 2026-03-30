@@ -86,7 +86,7 @@ export default function ProjectPage({
 						li: (props) => <li className="mb-1" {...props} />,
 						a: (props) => (
 							<a
-								className="text-blue-600 underline hover:text-blue-800"
+								className="text-blue-500 underline hover:text-blue-400"
 								{...props}
 							/>
 						),
