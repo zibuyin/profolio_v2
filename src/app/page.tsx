@@ -51,8 +51,9 @@ export default function Home() {
 					<Welcome></Welcome>
 				</div>
 				{/* 60/40 ratio for making to transparent before moving, */}
-				<div className="pt-[60vh] mt-[40vh] bg-gradient-to-b from-transparent via-[#0a0a0a] to-[#0a0a0a] dark:via-[#0a0a0a] dark:to-[#0a0a0a] via-zinc-50 to-zinc-50 z-10 relative">
+				<div className="pt-[80vh] mt-[50vh] bg-gradient-to-b from-transparent via-[#0a0a0a] to-[#0a0a0a] dark:via-[#0a0a0a] dark:to-[#0a0a0a] via-zinc-50 to-zinc-50 z-10 relative">
 					<Projects></Projects>
+
 					{/* Small padding */}
 					<div className="h-30"></div>
 					<AboutMe></AboutMe>

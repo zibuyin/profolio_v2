@@ -4,11 +4,12 @@ import { faAngleDown } from "@fortawesome/free-solid-svg-icons";
 
 export default function ScrollIndicator() {
 	return (
-		<div className="flex flex-col gap-2 items-center justify-center h-10">
+		<div className="flex flex-col gap-2 items-center justify-center">
 			{/* <p>Welcome</p> */}
 			<FontAwesomeIcon
 				icon={faAngleDown}
-				className="w-10 h-10 justify-self-center"
+				bounce
+				className="w-50 h-50 justify-self-center scale-200"
 			/>
 		</div>
 	);

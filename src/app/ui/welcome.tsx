@@ -43,7 +43,7 @@ export default function Welcome() {
 					/>
 				</div>
 			</div>
-			<div className="absolute bottom-10 left-1/2 transform -translate-x-1/2">
+			<div className="absolute bottom-20 left-1/2 transform -translate-x-1/2">
 				<ScrollIndicator />
 			</div>
 		</div>
