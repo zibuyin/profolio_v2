@@ -1,7 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import Gallery from "./ui/gallery";
 import Projects from "./ui/projects";
 import Welcome from "./ui/welcome";
 import AboutMe from "./ui/aboutMe";
