@@ -13,7 +13,7 @@ export default function Footer() {
 			className={
 				isProjects
 					? "h-[5vh] bg-zinc-50 dark:bg-black z-888 pt-[7vh] pb-[7vh] ml-[30px] mr-[30px] xl:ml-[25vw] xl:mr-[25vw] flex flex-row justify-between"
-					: "h-[5vh] bg-zinc-50 dark:bg-black z-888 pt-[7vh] pb-[7vh] ml-[15vw] mr-[15vw] flex flex-row justify-between"
+					: "h-[5vh] bg-zinc-50 dark:bg-black z-888 pt-[7vh] pb-[7vh] pl-[20px] pr-[20px] xl:ml-[15vw] xl:mr-[15vw] flex flex-row justify-between"
 			}
 		>
 			<a href="github.com/zibuyin/">
