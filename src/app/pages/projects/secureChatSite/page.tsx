@@ -7,7 +7,7 @@ export default function AutomaticMedicationDispenser() {
 				title="Automatic Medication Dispenser"
 				date="March 29, 2026"
 				author="Nathan Yin"
-				mdPath="automaticMedicationDispenser.md"
+				mdPath="secureChatSite.md"
 			/>
 		</main>
 	);
