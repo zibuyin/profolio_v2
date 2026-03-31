@@ -7,8 +7,10 @@ export default function Projects() {
 	const t = useTranslations("ProjectCards");
 	const section_t = useTranslations("ProjectsSection");
 	return (
-		<div className="projects-section flex flex-col">
-			<h1 className="text-6xl font-bold mb-6">{section_t("title")}</h1>
+		<div className="projects-section flex flex-col text-center md:text-left">
+			<h1 className="text-5xl md:text-6xl font-bold mb-10">
+				{section_t("title")}
+			</h1>
 			<ProjectCard
 				title={t("title_1")}
 				modelPath="models/medicationDispenser.gltf"
@@ -20,6 +22,7 @@ export default function Projects() {
 				description="A basic messaging client that sends and recieves messages via socket.io. Encrypted using AES with secure key exchange, supports moderation and chat filters"
 				url="secureChatSite"
 				imagePath="https://raw.githubusercontent.com/snej55/chat_site/refs/heads/main/media/screenshot_2.png"
+				repoUrl="https://github.com/snej55/chat_site"
 			/>
 		</div>
 	);

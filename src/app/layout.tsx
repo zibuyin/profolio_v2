@@ -19,7 +19,7 @@ export default function RootLayout({
 			<body className="min-h-full flex flex-col">
 				<NextIntlClientProvider>{children}</NextIntlClientProvider>
 				<Footer />
-				<CounterModule />
+				{/* <CounterModule /> */}
 			</body>
 		</html>
 	);

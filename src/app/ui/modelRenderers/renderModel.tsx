@@ -25,7 +25,7 @@ export default function Model({ path }: ModelProps) {
 	return (
 		<div className="w-400px h-400px">
 			<Canvas
-				camera={{ position: [4, 2, 4] }}
+				camera={{ position: [4, 1, 4] }}
 				style={{ borderRadius: 12, width: "400px", height: "280px" }}
 			>
 				<ambientLight intensity={0.7} />

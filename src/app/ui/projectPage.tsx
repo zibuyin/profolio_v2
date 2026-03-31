@@ -2,10 +2,10 @@
 
 // Renderer for each projects page, responsible for md -> html and margins & paddings
 import Markdown from "react-markdown";
+import Link from "next/link";
 import { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleArrowLeft } from "@fortawesome/free-solid-svg-icons";
-import { useRouter } from "next/navigation";
 
 interface ProjectPageProps {
 	title: string;
@@ -22,7 +22,6 @@ export default function ProjectPage({
 }: ProjectPageProps) {
 	const [content, setContent] = useState<string>("");
 	const [isMounted, setIsMounted] = useState(false);
-	const router = useRouter();
 
 	useEffect(() => {
 		setIsMounted(true);
@@ -36,21 +35,27 @@ export default function ProjectPage({
 	}, []);
 
 	return (
-		<div className="pl-[27vw] pr-[27vw] h-scree">
+		<div className="pl-[30px] pr-[30px] xl:pl-[25vw] xl:pr-[25vw]">
 			<div className="back-btn mt-10  w-fit h-fit:">
 				{isMounted && (
-					<FontAwesomeIcon
-						icon={faCircleArrowLeft}
-						size="xl"
-						className=" hover:text-gray-400 transition-colors duration-200 cursor-pointer"
-						onClick={() => router.push("/")}
-					/>
+					<Link
+						href="/"
+						className="inline-flex items-center justify-center shrink-0"
+					>
+						<FontAwesomeIcon
+							icon={faCircleArrowLeft}
+							className="w-6 h-6 hover:text-gray-400 transition-colors duration-200 cursor-pointer"
+							size="xl"
+						/>
+					</Link>
 				)}
 			</div>
 
-			<div className=" pt-[130px]">
-				<h1 className="title text-5xl font-bold mb-1.5">{title}</h1>
-				<h2 className="date text-xl font-bold">
+			<div className=" pt-[100px]">
+				<h1 className="title text-3xl xl:text-5xl font-bold mb-1.5">
+					{title}
+				</h1>
+				<h2 className="date xl:text-xl font-bold">
 					{date} • {author}
 				</h2>
 				<div className="bg-gray-500 w-full h-[1px] mt-3 mb-5"></div>
@@ -110,7 +115,7 @@ export default function ProjectPage({
 						),
 						img: (props) => (
 							<img
-								className="max-w-full rounded-2xl my-4 w-[90%] mx-auto"
+								className="max-w-full rounded-2xl my-4 w-[95%] mx-auto"
 								{...props}
 							/>
 						),

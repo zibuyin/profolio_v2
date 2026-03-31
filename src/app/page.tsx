@@ -43,7 +43,7 @@ function getScrollDistance() {
 
 export default function Home() {
 	return (
-		<div className="flex flex-col flex-1 justify-center pl-[15vw] pr-[15vw] bg-zinc-50 font-sans dark:bg-[#0a0a0a]">
+		<div className="flex flex-col w-auto flex-1 justify-center pl-[20px] pr-[20px] md:pl-[15vw] md:pr-[15vw] bg-zinc-50 font-sans dark:bg-[#0a0a0a]">
 			<main>
 				<div className="fixed inset-0 flex items-center justify-center">
 					{/* <ScrollIndicator></ScrollIndicator> */}

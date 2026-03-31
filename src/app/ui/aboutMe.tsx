@@ -121,8 +121,10 @@ export default function AboutMe() {
 
 	return (
 		<div className="projects-section flex flex-col">
-			<h1 className="text-6xl font-bold mb-6">About Me</h1>
-			<h2 className="text-2xl font-bold mb-5">
+			<h1 className="text-4xl md:text-5xl font-bold mb-5 md:mb-10">
+				About Me
+			</h1>
+			<h2 className="text-l md:text-2xl font-bold mb-5">
 				I like to do programming and also engineering as a hobby. I
 				mostly do web development, sometimes I do game development using
 				Pygame.
