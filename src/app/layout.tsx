@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { NextIntlClientProvider } from "next-intl";
+import CounterModule from "./components/counterComponent";
 import "./globals.css";
 import Footer from "./components/footer";
 
@@ -18,6 +19,7 @@ export default function RootLayout({
 			<body className="min-h-full flex flex-col">
 				<NextIntlClientProvider>{children}</NextIntlClientProvider>
 				<Footer />
+				<CounterModule />
 			</body>
 		</html>
 	);
