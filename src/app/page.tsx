@@ -7,7 +7,7 @@ import AboutMe from "./ui/aboutMe";
 import ScrollIndicator from "./components/scrollDownIndicator";
 import ScrollReveal from "./components/ScrollReveal";
 import Footer from "./components/footer";
-
+import Comments from "./components/giscus";
 let currentY = 0;
 // Function to get current scroll distances
 function getScrollDistance() {

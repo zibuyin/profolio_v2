@@ -6,7 +6,7 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleArrowLeft } from "@fortawesome/free-solid-svg-icons";
-
+import Comments from "@/src/app/components/giscus";
 interface ProjectPageProps {
 	title: string;
 	date: string;
@@ -129,6 +129,8 @@ export default function ProjectPage({
 				>
 					{content}
 				</Markdown>
+				<div className="bg-gray-500 w-full h-[1px] mt-10 mb-5"></div>
+				<Comments></Comments>
 			</div>
 		</div>
 	);
