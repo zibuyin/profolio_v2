@@ -4,12 +4,6 @@ import CounterModule from "./components/counterComponent";
 import "./globals.css";
 import Footer from "./components/footer";
 
-export const metadata: Metadata = {
-	title: "Nathan Yin's Profolio",
-	description:
-		"Hello! I'm Nathan Yin. This is my profolio page, come take at a look at the projects I make! Maybe leave an email for suggestions?",
-};
-
 export default function RootLayout({
 	children,
 }: Readonly<{

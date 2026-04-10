@@ -1,5 +1,6 @@
-"use client";
+// "use client";
 
+import { Metadata } from "next";
 import Image from "next/image";
 import Projects from "./ui/projects";
 import Welcome from "./ui/welcome";
@@ -40,6 +41,11 @@ function getScrollDistance() {
 // 	console.log(currentY);
 // window.scrollTo(0, 1000);
 // });
+export const metadata: Metadata = {
+	title: "Nathan Yin's Profolio",
+	description:
+		"Hello! I'm Nathan Yin. This is my profolio page, come take at a look at the projects I make! Maybe leave an email for suggestions?",
+};
 
 export default function Home() {
 	return (
