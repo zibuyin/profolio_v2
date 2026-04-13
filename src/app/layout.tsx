@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { NextIntlClientProvider } from "next-intl";
-import CounterModule from "./components/counterComponent";
 import "./globals.css";
 import Footer from "./components/footer";
 
