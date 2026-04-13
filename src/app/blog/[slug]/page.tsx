@@ -1,5 +1,6 @@
 import { compileMDX } from "next-mdx-remote/rsc";
 import Link from "next/link";
+import { notFound } from "next/navigation";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import Comments from "@/src/app/components/giscus";
@@ -8,7 +9,20 @@ import fs from "fs";
 import path from "path";
 
 function loadFile(slug: string) {
-	const mdPath = path.join(process.cwd(), `content/blog/md/${slug}.mdx`);
+	if (!/^[a-zA-Z0-9-]+$/.test(slug)) {
+		notFound();
+	}
+
+	const contentDir = path.resolve(process.cwd(), "content/blog/md");
+	const mdPath = path.resolve(contentDir, `${slug}.mdx`);
+
+	if (
+		!mdPath.startsWith(`${contentDir}${path.sep}`) ||
+		!fs.existsSync(mdPath)
+	) {
+		notFound();
+	}
+
 	return fs.readFileSync(mdPath, "utf8");
 }
 

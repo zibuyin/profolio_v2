@@ -15,9 +15,9 @@ export default function BlogCard({
 }: BlogCardProps) {
 	return (
 		<a href={`blog/${slug}`}>
-			<div className="flex flex-row gap-10 mb-2 mt-2 transition-all duration-300 hover:-translate-y-0.5">
+			<div className="flex flex-col md:flex-row gap-2 md:gap-10 mb-2 mt-2 transition-all duration-300 hover:-translate-y-0.5">
 				<p className="text-gray-500">{date}</p>
-				<div className="flex flex-row w-[50vw] ">
+				<div className="flex flex-row md:w-[50vw] ">
 					<p className="mr-1 font-bold underline underline-offset-2">
 						{title}
 					</p>

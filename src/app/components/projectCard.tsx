@@ -42,7 +42,7 @@ export default function ProjectCard({
 							className="ml-5"
 							href={repoUrl}
 							target="_blank"
-							rel="noreferrer"
+							rel="noreferrer noopener"
 						>
 							<FontAwesomeIcon
 								icon={faGithub}
