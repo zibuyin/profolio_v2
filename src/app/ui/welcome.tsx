@@ -42,6 +42,10 @@ export default function Welcome() {
 						speed={50}
 					/>
 				</div>
+				<p className="mt-5 text-gray-500">
+					Latest Post: This is a preview of the blog update... (2 days
+					ago)
+				</p>
 			</div>
 			<div className="absolute bottom-20 left-1/2 transform -translate-x-1/2">
 				<ScrollIndicator />

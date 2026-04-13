@@ -9,6 +9,7 @@ import ScrollIndicator from "./components/scrollDownIndicator";
 import ScrollReveal from "./components/ScrollReveal";
 import Footer from "./components/footer";
 import Comments from "./components/giscus";
+import BlogSection from "./ui/blogSection";
 let currentY = 0;
 // Function to get current scroll distances
 function getScrollDistance() {
@@ -62,6 +63,8 @@ export default function Home() {
 					{/* Small padding */}
 					<div className="h-30"></div>
 					<AboutMe></AboutMe>
+					<div className="h-30"></div>
+					<BlogSection></BlogSection>
 				</div>
 			</main>
 		</div>
