@@ -1,29 +1,39 @@
-"use client";
+// "use client";
 
-import ProjectCard from "./projectCard";
+import ProjectCard from "../components/projectCard";
 import { useTranslations } from "next-intl";
+import indexFolder from "@/utils/indexFolder";
+import loadMd from "@/utils/loadMd";
 
 export default function Projects() {
-	const t = useTranslations("ProjectCards");
 	const section_t = useTranslations("ProjectsSection");
+	const cards = [];
+	const mds = indexFolder("content/project/md");
+
+	for (let i = 0; i < mds.length; i++) {
+		const { data } = loadMd(`content/project/md/${mds[i]}`);
+		const fallbackSlug = mds[i].replace(/\.mdx?$/, "");
+
+		cards.push(
+			<ProjectCard
+				key={data.slug ?? fallbackSlug}
+				title={data.title}
+				description={data.description}
+				slug={data.slug ?? fallbackSlug}
+				// Give nothing if not present
+				modelPath={data.modelPath ?? ""}
+				imagePath={data.imagePath ?? ""}
+				repoUrl={data.repoUrl ?? ""}
+			/>,
+		);
+	}
+
 	return (
 		<div className="projects-section flex flex-col text-center md:text-left">
 			<h1 className="text-5xl md:text-6xl font-bold mb-10">
 				{section_t("title")}
 			</h1>
-			<ProjectCard
-				title={t("title_1")}
-				modelPath="models/medicationDispenser.gltf"
-				description={t("description_1")}
-				url="automaticMedicationDispenser"
-			/>
-			<ProjectCard
-				title="Secure Chat Site [WIP]"
-				description="A basic messaging client that sends and recieves messages via socket.io. Encrypted using AES with secure key exchange, supports moderation and chat filters"
-				url="secureChatSite"
-				imagePath="https://raw.githubusercontent.com/snej55/chat_site/refs/heads/main/media/screenshot_2.png"
-				repoUrl="https://github.com/snej55/chat_site"
-			/>
+			{cards}
 		</div>
 	);
 }

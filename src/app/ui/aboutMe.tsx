@@ -1,8 +1,8 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import LogoLoop from "@/src/component/LogoLoop";
-import type { LogoItem } from "@/src/component/LogoLoop";
+import LogoLoop from "@/src/app/components/LogoLoop";
+import type { LogoItem } from "@/src/app/components/LogoLoop";
 
 const programmingLogos: LogoItem[] = [
 	{
@@ -79,7 +79,7 @@ const programmingLogos: LogoItem[] = [
 
 const engineeringLogos: LogoItem[] = [
 	{
-		src: "/images/onshape.png",
+		src: "onshape.png",
 		title: "Onshape",
 		href: "https://www.onshape.com",
 	},
