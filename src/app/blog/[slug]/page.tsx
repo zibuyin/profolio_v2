@@ -7,6 +7,12 @@ import Comments from "@/src/app/components/giscus";
 import Model from "@/src/app/ui/modelRenderers/renderModel";
 import fs from "fs";
 import path from "path";
+import type { Metadata, ResolvingMetadata } from "next";
+import loadMd from "@/utils/loadMd";
+type generateMetadataProps = {
+	params: Promise<{ slug: string }>;
+	searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+};
 
 function loadFile(slug: string) {
 	if (!/^[a-zA-Z0-9-]+$/.test(slug)) {
@@ -24,6 +30,19 @@ function loadFile(slug: string) {
 	}
 
 	return fs.readFileSync(mdPath, "utf8");
+}
+
+export async function generateMetadata(
+	{ params, searchParams }: generateMetadataProps,
+	parent: ResolvingMetadata,
+): Promise<Metadata> {
+	const slug = (await params).slug;
+	const { data, content } = loadMd(`content/blog/md/${slug}.mdx`);
+
+	return {
+		title: `Nathan Yin - ${data.title}`,
+		description: data.description,
+	};
 }
 
 export default async function Page(props: {

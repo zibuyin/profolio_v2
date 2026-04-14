@@ -1,24 +1,64 @@
 "use client";
 
 import { useGLTF } from "@react-three/drei";
-import { Canvas, useFrame } from "@react-three/fiber";
-import { useRef } from "react";
-import { Mesh } from "three";
+import { Canvas } from "@react-three/fiber";
+import { Component, type ErrorInfo, type ReactNode, Suspense } from "react";
 import { OrbitControls } from "@react-three/drei";
 
 interface ModelProps {
 	path: string;
 }
 
-function Box({ path }: { path: string }) {
-	const meshRef = useRef<Mesh>(null!);
-	const { scene } = useGLTF(path);
+interface ModelErrorBoundaryProps {
+	children: ReactNode;
+	modelPath: string;
+}
 
+interface ModelErrorBoundaryState {
+	hasError: boolean;
+}
+
+class ModelErrorBoundary extends Component<
+	ModelErrorBoundaryProps,
+	ModelErrorBoundaryState
+> {
+	state: ModelErrorBoundaryState = { hasError: false };
+
+	static getDerivedStateFromError(): ModelErrorBoundaryState {
+		return { hasError: true };
+	}
+
+	componentDidCatch(error: unknown, errorInfo: ErrorInfo) {
+		console.error(
+			"Error loading GLTF model:",
+			this.props.modelPath,
+			error,
+			errorInfo,
+		);
+	}
+
+	render() {
+		if (this.state.hasError) {
+			return <ModelFallback />;
+		}
+
+		return this.props.children;
+	}
+}
+
+function ModelFallback() {
 	return (
-		<mesh receiveShadow ref={meshRef} scale={25}>
-			<primitive object={scene}></primitive>
+		<mesh scale={0.7}>
+			<boxGeometry args={[1.6, 1.6, 1.6]} />
+			<meshStandardMaterial color="#cbd5e1" wireframe />
 		</mesh>
 	);
+}
+
+function LoadedModel({ path }: { path: string }) {
+	const { scene } = useGLTF(path);
+
+	return <primitive object={scene} scale={25} />;
 }
 
 export default function Model({ path }: ModelProps) {
@@ -39,7 +79,11 @@ export default function Model({ path }: ModelProps) {
 					intensity={0.7}
 					color="#b0b0b0"
 				/>
-				<Box path={path} />
+				<ModelErrorBoundary modelPath={path}>
+					<Suspense fallback={<ModelFallback />}>
+						<LoadedModel path={path} />
+					</Suspense>
+				</ModelErrorBoundary>
 				<OrbitControls
 					enableZoom={true}
 					dampingFactor={0.2}

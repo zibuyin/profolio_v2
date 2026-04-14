@@ -7,30 +7,6 @@ const gitHash = execSync("git rev-parse --short HEAD")
   .toString()
   .trim();
 
-const isDev = process.env.NODE_ENV !== "production";
-const scriptSrc = [
-  "'self'",
-  "'unsafe-inline'",
-  "'wasm-unsafe-eval'",
-  ...(isDev ? ["'unsafe-eval'"] : []),
-  "https://giscus.app",
-  "https://*.giscus.app",
-].join(" ");
-
-const contentSecurityPolicy = [
-  "default-src 'self'",
-  `script-src ${scriptSrc}`,
-  "style-src 'self' 'unsafe-inline'",
-  "img-src 'self' data: blob: https:",
-  "font-src 'self' data: https:",
-  "connect-src 'self' data: blob: https:",
-  "frame-src https://giscus.app https://*.giscus.app",
-  "object-src 'none'",
-  "base-uri 'self'",
-  "form-action 'self'",
-  "frame-ancestors 'none'",
-].join("; ");
-
 const nextConfig: NextConfig = {
   env: {
     NEXT_PUBLIC_GIT_HASH: gitHash,
@@ -40,10 +16,6 @@ const nextConfig: NextConfig = {
       {
         source: "/(.*)",
         headers: [
-          {
-            key: "Content-Security-Policy",
-            value: contentSecurityPolicy,
-          },
           {
             key: "Referrer-Policy",
             value: "strict-origin-when-cross-origin",
