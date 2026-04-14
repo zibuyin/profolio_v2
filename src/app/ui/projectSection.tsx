@@ -33,6 +33,22 @@ export default function Projects() {
 			<h1 className="text-5xl md:text-6xl font-bold mb-10">
 				{section_t("title")}
 			</h1>
+			{/* <BorderGlow
+				edgeSensitivity={30}
+				glowColor="40 80 80"
+				backgroundColor="#120F17"
+				borderRadius={28}
+				glowRadius={40}
+				glowIntensity={1}
+				coneSpread={25}
+				animated={false}
+				colors={["#c084fc", "#f472b6", "#38bdf8"]}
+			>
+				<div style={{ padding: "2em" }}>
+					<h2>Your Content Here</h2>
+					<p>Hover near the edges to see the glow.</p>
+				</div>
+			</BorderGlow> */}
 			{cards}
 		</div>
 	);

@@ -2,14 +2,17 @@
 
 import { Metadata } from "next";
 import Image from "next/image";
-import Projects from "./ui/projects";
-import Welcome from "./ui/welcome";
-import AboutMe from "./ui/aboutMe";
+import Projects from "./ui/projectSection";
+import Welcome from "./ui/welcomeSection";
+import AboutMe from "./ui/aboutMeSection";
 import ScrollIndicator from "./components/scrollDownIndicator";
 import ScrollReveal from "./components/ScrollReveal";
 import Footer from "./components/footer";
 import Comments from "./components/giscus";
 import BlogSection from "./ui/blogSection";
+import Contacts from "./ui/contactsSection";
+import CopyDetection from "./ui/copyDetection";
+
 let currentY = 0;
 // Function to get current scroll distances
 function getScrollDistance() {
@@ -60,6 +63,7 @@ export default function Home() {
 				<div className="pt-[80vh] mt-[50vh] bg-gradient-to-b from-transparent via-[#0a0a0a] to-[#0a0a0a] dark:via-[#0a0a0a] dark:to-[#0a0a0a] via-zinc-50 to-zinc-50 z-10 relative">
 					<section id="projects">
 						<div className="h-30"></div>
+
 						<Projects></Projects>
 					</section>
 
@@ -73,6 +77,10 @@ export default function Home() {
 					<section id="blog">
 						<div className="h-30"></div>
 						<BlogSection></BlogSection>
+					</section>
+					<section id="contacts">
+						<div className="h-30"></div>
+						<Contacts></Contacts>
 					</section>
 				</div>
 			</main>

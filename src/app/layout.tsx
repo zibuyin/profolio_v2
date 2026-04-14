@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { NextIntlClientProvider } from "next-intl";
 import "./globals.css";
 import Footer from "./components/footer";
-
+import CopyDetection from "./ui/copyDetection";
 export default function RootLayout({
 	children,
 }: Readonly<{
@@ -12,6 +12,7 @@ export default function RootLayout({
 		<html lang="en" className="h-full antialiased">
 			<body className="min-h-full flex flex-col">
 				<NextIntlClientProvider>{children}</NextIntlClientProvider>
+				<CopyDetection></CopyDetection>
 				<Footer />
 				{/* <CounterModule /> */}
 			</body>
