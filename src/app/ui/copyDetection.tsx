@@ -31,7 +31,7 @@ export default function CopyDetection() {
 		<div id="popup">
 			<div className="fixed inset-0 bg-black/60 backdrop-blur-md z-40" />
 			<div className="fixed inset-0 z-50 flex items-center justify-center ">
-				<div className="bg-mist-900 w-[80vw] md:w-[30vw] h-[39vh] opacity-100 rounded-2xl text-center p-7">
+				<div className="bg-mist-900 w-[80vw] md:w-[30vw] h-fit opacity-100 rounded-2xl text-center p-7">
 					<h1 className="text-4xl font-black mb-5">Hold Up ⚠️</h1>
 					<p className="mb-2 md:mb-5">
 						This website's contents are under the{" "}
