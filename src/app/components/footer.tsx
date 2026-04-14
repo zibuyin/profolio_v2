@@ -19,7 +19,8 @@ export default function Footer() {
 			<a href="https://github.com/zibuyin/profolio_v2">
 				<p className="text-gray-500">
 					<FontAwesomeIcon icon={faCodeCommit} />{" "}
-					{process.env.NEXT_PUBLIC_GIT_HASH}
+					{process.env.NEXT_PUBLIC_GIT_HASH} -{" "}
+					{process.env.NEXT_PUBLIC_GIT_LAST_UPDATED}
 				</p>
 			</a>
 			<p className="text-gray-500">© Nathan Yin 2026</p>
