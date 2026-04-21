@@ -16,22 +16,41 @@ export default function Page() {
 			</div>
 
 			<div className="flex flex-col bg-mist-900 rounded-4xl p-5 w-full mt-10 transition-all">
-				<div className="header flex flex-rol justify-between items-center">
-					<h2 className="text-xl md:text-2xl font-bold m-0 p-0">
-						Project Posts
-					</h2>
-					<button
-						onClick={() =>
-							expanded ? setExpanded(false) : setExpanded(true)
-						}
-						// className="inline-block bg-blue-700 hover:bg-blue-600 p-2 pr-3 pl-3 rounded-full font-medium text-white"
-					>
+				<button
+					onClick={() =>
+						expanded ? setExpanded(false) : setExpanded(true)
+					}
+					// className="inline-block bg-blue-700 hover:bg-blue-600 p-2 pr-3 pl-3 rounded-full font-medium text-white"
+				>
+					<div className="header flex flex-rol justify-between items-center">
+						<h2 className="text-xl md:text-2xl font-bold m-0 p-0">
+							Project Posts
+						</h2>
+
 						<FaChevronDown></FaChevronDown>
-					</button>
-				</div>
+					</div>
+				</button>
 
 				{expanded && (
 					<div className="flex flex-col editor-area w-full h-auto mt-6">
+						<div className="flex flex-col mb-5 justify-between gap-5">
+							<input
+								placeholder="Title"
+								className="border-3 rounded-2xl h-10 p-2 flex"
+							></input>
+							<input
+								placeholder="Date"
+								className="border-3 rounded-2xl h-10 p-2"
+							></input>
+							<input
+								placeholder="Author (Default: Nathan Yin)"
+								className="border-3 rounded-2xl p-2"
+							></input>
+							<input
+								placeholder="Description"
+								className="border-3 rounded-2xl h-10 p-2 pt-5 pb-30"
+							></input>
+						</div>
 						<Tiptap></Tiptap>
 						<div className="flex flex-row gap-5 mt-6">
 							<button className="inline-block bg-green-700 hover:bg-green-600 p-2 pr-3 pl-3 rounded-full font-medium text-white">

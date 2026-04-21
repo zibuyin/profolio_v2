@@ -4,6 +4,8 @@ import { useMemo } from "react";
 import { usePathname } from "next/navigation";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCodeCommit } from "@fortawesome/free-solid-svg-icons";
+import StatusBadge from "../ui/statusBadge";
+import SystemStatus from "../ui/newStatusBadge";
 
 function timeAgo(dateString: string) {
 	const rtf = new Intl.RelativeTimeFormat("en", { numeric: "auto" });
@@ -33,8 +35,8 @@ export default function Footer() {
 		<footer
 			className={
 				isProjects
-					? "h-[5vh] bg-zinc-50 dark:bg-black z-888 pt-[7vh] pb-[7vh] ml-[30px] mr-[30px] xl:ml-[25vw] xl:mr-[25vw] flex flex-row justify-between"
-					: "h-[5vh] bg-zinc-50 dark:bg-black z-888 pt-[7vh] pb-[7vh] pl-[20px] pr-[20px] xl:ml-[15vw] xl:mr-[15vw] flex flex-row justify-between"
+					? "h-[5vh] bg-zinc-50 dark:bg-black z-888 pt-[7vh] pb-[7vh] ml-[30px] mr-[30px] xl:ml-[25vw] xl:mr-[25vw] flex flex-row justify-between items-center"
+					: "h-[5vh] bg-zinc-50 dark:bg-black z-888 pt-[7vh] pb-[7vh] pl-[20px] pr-[20px] xl:ml-[15vw] xl:mr-[15vw] flex flex-row justify-between items-center"
 			}
 		>
 			<a href="https://github.com/zibuyin/profolio_v2">
@@ -43,6 +45,8 @@ export default function Footer() {
 					{process.env.NEXT_PUBLIC_GIT_HASH} - {lastUpdated}
 				</p>
 			</a>
+			{/* <StatusBadge></StatusBadge> */}
+			<SystemStatus></SystemStatus>
 			<p className="text-gray-500">© Nathan Yin 2026</p>
 		</footer>
 	);
