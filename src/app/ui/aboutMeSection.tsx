@@ -120,7 +120,7 @@ export default function AboutMe() {
 				<p className="-ml-5 font-bold">General Info</p>
 				<li>I currently study in the UK 🏫</li>
 				<li>I am into engineering, computer science, and medicine</li>
-				<li>I use edge on MacOS btw (plz don't hate me)</li>
+				{/* <li>I use edge on MacOS btw (plz don't hate me)</li> */}
 				<li>
 					I own a 3D printing and often use it to make useful items
 				</li>
@@ -139,14 +139,14 @@ export default function AboutMe() {
 				<li>Drink coconut flavoured coffee</li>
 				<li>3D Printing and CAD Modeling</li>
 				<li>Webdev, especially react and Next.js</li>
-				<li>
+				{/* <li>
 					<a
 						href="https://en.wikipedia.org/wiki/DevOps"
 						className="underline underline-offset-3 text-blue-500"
 					>
 						DevOps
 					</a>
-				</li>
+				</li> */}
 				<li>
 					Do lab work (I had an one week work experience in a research
 					centre!)

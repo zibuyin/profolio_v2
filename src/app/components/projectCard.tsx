@@ -59,6 +59,7 @@ export default function ProjectCard({
 						<img
 							src={imagePath}
 							alt={title}
+							referrerPolicy="no-referrer"
 							className="mx-auto xl:ml-40 w-auto h-70"
 						/>
 					) : (

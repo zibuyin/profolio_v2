@@ -2,7 +2,12 @@
 
 [![Better Stack Badge](https://uptime.betterstack.com/status-badges/v1/monitor/2kclb.svg)](https://uptime.betterstack.com/?utm_source=status_badge)
 
-# Attributions
+## Features
 
-Footer status badge is a Next.JS fork of the Vue version by (池鱼(Chiyu))[https://chiyu.it/posts/2025/1230]
+- Built using NEXT.JS, supports SSR (Server Side Rendering)
+- Blog post pages and project pages rendered and generated on demand based on `mdx` files.
+
+## Attributions
+
+Footer status badge is a Next.JS fork of the Vue version by (池鱼鱼(Chiyu))[https://chiyu.it/posts/2025/1230]
 Comment section is made using (Giscus)[https://giscus.app/]

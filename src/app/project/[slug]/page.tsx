@@ -104,6 +104,7 @@ export default async function Page(props: {
 			img: ({ alt, ...props }) => (
 				<img
 					alt={alt ?? ""}
+					referrerPolicy="no-referrer"
 					className="max-w-full rounded-2xl my-4 w-[95%] mx-auto"
 					{...props}
 				/>
