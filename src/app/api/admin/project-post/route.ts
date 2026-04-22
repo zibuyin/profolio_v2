@@ -3,6 +3,7 @@ import fs from "fs/promises";
 import path from "path";
 import matter from "gray-matter";
 import TurndownService from "turndown";
+import { runPostPublish } from "@/src/lib/run-post-publish";
 
 interface SavePayload {
 	title: string;
@@ -101,6 +102,11 @@ export async function POST(request: NextRequest) {
 
 		await fs.mkdir(targetDir, { recursive: true });
 		await fs.writeFile(targetPath, fileContent, "utf8");
+		await runPostPublish({
+			filePath: targetPath,
+			postType: "project",
+			slug,
+		});
 
 		return NextResponse.json({
 			success: true,
