@@ -479,7 +479,9 @@ export default function AdminClient({ adminSecret }: AdminClientProps) {
 					method: "POST",
 					headers: {
 						"Content-Type": "application/json",
-						...(adminSecret ? { Authorization: `Bearer ${adminSecret}` } : {}),
+						...(adminSecret
+							? { Authorization: `Bearer ${adminSecret}` }
+							: {}),
 					},
 					body: JSON.stringify({
 						title: title.trim(),
@@ -564,7 +566,9 @@ export default function AdminClient({ adminSecret }: AdminClientProps) {
 				method: "POST",
 				headers: {
 					"Content-Type": "application/json",
-					...(adminSecret ? { Authorization: `Bearer ${adminSecret}` } : {}),
+					...(adminSecret
+						? { Authorization: `Bearer ${adminSecret}` }
+						: {}),
 				},
 				body: JSON.stringify({
 					title: title.trim(),
