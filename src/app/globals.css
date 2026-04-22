@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import "highlight.js/styles/atom-one-dark.css";
 
 :root {
   --background: #ffffff;
@@ -40,6 +41,7 @@ footer {
   outline: none;
 }
 
+.post-content h1,
 .tiptap-editor .ProseMirror h1 {
   font-size: 3rem;
   line-height: 1;
@@ -47,6 +49,7 @@ footer {
   margin-bottom: 1rem;
 }
 
+.post-content h2,
 .tiptap-editor .ProseMirror h2 {
   font-size: 1.5rem;
   line-height: 2rem;
@@ -54,6 +57,7 @@ footer {
   margin-bottom: 0.75rem;
 }
 
+.post-content h3,
 .tiptap-editor .ProseMirror h3 {
   font-size: 1.25rem;
   line-height: 1.75rem;
@@ -62,36 +66,56 @@ footer {
   margin-bottom: 0.5rem;
 }
 
+.post-content p,
 .tiptap-editor .ProseMirror p {
-  margin-bottom: 1rem;
-  line-height: 1.625;
+  margin-bottom: 0px;
+  /* line-height: 1.625; */
 }
 
+.post-content ul,
 .tiptap-editor .ProseMirror ul {
   list-style-type: disc;
+  ;
   margin-left: 2rem;
   margin-bottom: 1rem;
 }
 
+.post-content ol,
 .tiptap-editor .ProseMirror ol {
   list-style-type: decimal;
   margin-left: 2rem;
   margin-bottom: 1rem;
 }
 
+.post-content li,
 .tiptap-editor .ProseMirror li {
   margin-bottom: 0.25rem;
 }
 
+.post-content li::marker,
+.tiptap-editor .ProseMirror li::marker {
+  color: oklch(74.6% 0.16 232.661);
+  /* font-size: 1.2em; */
+  font-weight: bold;
+}
+
+.post-content a,
 .tiptap-editor .ProseMirror a {
   color: #2563eb;
   text-decoration: underline;
 }
 
+.post-content strong,
+.tiptap-editor .ProseMirror strong {
+  color: oklch(74.6% 0.16 232.661)
+}
+
+.post-content a:hover,
 .tiptap-editor .ProseMirror a:hover {
   color: #1e40af;
 }
 
+.post-content :not(pre)>code,
 .tiptap-editor .ProseMirror code {
   background-color: #f3f4f6;
   padding: 0.125rem 0.25rem;
@@ -117,17 +141,20 @@ footer {
   color: inherit;
 }
 
+.post-content blockquote,
 .tiptap-editor .ProseMirror blockquote {
-  border-left: 4px solid #9ca3af;
+  border-left: 4px solid oklch(74.6% 0.16 232.661);
   padding-left: 1rem;
   font-style: italic;
-  color: #4b5563;
-  background-color: #f9fafb;
-  margin: 1rem 0;
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
+  /* color: #4b5563; */
+  /* background-color: #f9fafb; */
+  margin: 2rem 0;
+  /* padding-top: 0.2rem; */
+  /* padding-bottom: 0.2rem; */
 }
 
+
+.post-content img,
 .tiptap-editor .ProseMirror img {
   max-width: 100%;
   border-radius: 1rem;
@@ -135,6 +162,7 @@ footer {
   width: 95%;
 }
 
+.post-content hr,
 .tiptap-editor .ProseMirror hr {
   border: 0;
   border-top: 1px solid #d1d5db;

@@ -167,6 +167,7 @@ interface AdminClientProps {
 export default function AdminClient({ adminSecret }: AdminClientProps) {
 	const [focused, setFocused] = useState(false);
 	const [expanded, setExpanded] = useState(true);
+	const [showPopup, setShowPopup] = useState(false);
 	const [postType, setPostType] = useState<PostType>("project");
 	const [title, setTitle] = useState("");
 	const [subtitle, setSubtitle] = useState("");
@@ -199,20 +200,31 @@ export default function AdminClient({ adminSecret }: AdminClientProps) {
 	const thumbnailInputRef = useRef<HTMLInputElement>(null);
 	const hasLoadedRef = useRef(false);
 	const saveDraftRef = useRef<() => void>(() => {});
+	const popupTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 	const { uploadState, uploadFile } = useFileUpload();
+
+	const triggerSavedPopup = () => {
+		setShowPopup(true);
+		if (popupTimeoutRef.current) {
+			clearTimeout(popupTimeoutRef.current);
+		}
+		popupTimeoutRef.current = setTimeout(() => {
+			setShowPopup(false);
+			popupTimeoutRef.current = null;
+		}, 1000);
+	};
 
 	useEffect(() => {
 		const keydownHandler = (e: any) => {
-			console.log(e.code);
 			// Quit fullscreen editor
-			if (e["code"] === "Escape") {
+			if (e.key === "Escape") {
 				setFocused(false);
 			}
-			// Save file
-
-			return () => {
-				document.removeEventListener("keydown", keydownHandler);
-			};
+			if (e.key === "s" && (e.metaKey || e.ctrlKey)) {
+				e.preventDefault();
+				saveDraftRef.current();
+				triggerSavedPopup();
+			}
 		};
 		document.addEventListener("keydown", keydownHandler);
 		const loadDraft = async () => {
@@ -276,6 +288,13 @@ export default function AdminClient({ adminSecret }: AdminClientProps) {
 		};
 
 		void loadDraft();
+
+		return () => {
+			document.removeEventListener("keydown", keydownHandler);
+			if (popupTimeoutRef.current) {
+				clearTimeout(popupTimeoutRef.current);
+			}
+		};
 	}, []);
 
 	useEffect(() => {
@@ -623,6 +642,18 @@ export default function AdminClient({ adminSecret }: AdminClientProps) {
 
 	return (
 		<div className="flex flex-col w-auto flex-1 pl-[20px] pr-[20px] md:pl-[15vw] md:pr-[15vw] bg-zinc-50 font-sans dark:bg-[#0a0a0a]">
+			{/* Saved popup */}
+
+			<div
+				className={
+					showPopup
+						? "fixed self-center pt-2 pb-2 pl-5 pr-5 rounded-full bg-green-600 text-white bottom-10 z-1000 transition-all ease-in-out"
+						: "fixed self-center pt-2 pb-2 pl-5 pr-5 rounded-full bg-green-600 text-white -bottom-10 z-1000 transition-all ease-in-out"
+				}
+			>
+				<p className="">✅ Saved!</p>
+			</div>
+
 			<div className="back-btn mt-10 w-fit h-fit">
 				<h1 className="text-4xl md:text-5xl font-bold">Admin Panel</h1>
 			</div>
@@ -868,6 +899,11 @@ export default function AdminClient({ adminSecret }: AdminClientProps) {
 									Image cached and waiting for Publish
 								</span>
 							)}
+							{saveMessage &&
+								cachedImageFile &&
+								!uploadState.isUploading && (
+									<span className="block"> </span>
+								)}
 							{saveMessage && (
 								<span className="text-green-400">
 									{saveMessage}

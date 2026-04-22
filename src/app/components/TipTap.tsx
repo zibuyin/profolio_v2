@@ -1,9 +1,29 @@
 "use client";
 
-import { useEditor, EditorContent } from "@tiptap/react";
+import { useEditor, EditorContent, Extension } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import Image from "@tiptap/extension-image";
 import { TextSelection } from "@tiptap/pm/state";
+import CodeBlockLowlight from "@tiptap/extension-code-block-lowlight";
+import { createLowlight, all } from "lowlight";
+
+const TabIndent = Extension.create({
+	name: "tabIndent",
+	addKeyboardShortcuts() {
+		return {
+			Tab: ({ editor }) => {
+				if (editor.isActive("codeBlock")) {
+					return editor.commands.insertContent("\t");
+				}
+				return editor.commands.insertContent(
+					"\u00a0\u00a0\u00a0\u00a0",
+				);
+			},
+		};
+	},
+});
+
+const lowlight = createLowlight(all);
 
 interface TiptapProps {
 	onImageDropUpload?: (file: File) => Promise<string | null>;
@@ -22,7 +42,9 @@ const Tiptap = ({
 }: TiptapProps) => {
 	const editor = useEditor({
 		extensions: [
-			StarterKit,
+			StarterKit.configure({ codeBlock: false }),
+			CodeBlockLowlight.configure({ lowlight }),
+			TabIndent,
 			Image.extend({
 				draggable: true,
 			}),

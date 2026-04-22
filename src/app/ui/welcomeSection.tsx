@@ -5,11 +5,16 @@ import ScrollIndicator from "../components/scrollDownIndicator";
 import ShinyText from "../components/ShinyText";
 import DecryptedText from "../components/DecryptedText";
 import StatusBadge from "./statusBadge";
+import Link from "next/link";
 
 export default function Welcome() {
 	const t = useTranslations("WelcomeSection");
 	return (
 		<>
+			<Link
+				href="/admin"
+				className="absolute top-0 left-0 w-10 h-10 opacity-0 cursor-default"
+			></Link>
 			<div className="welcome-section h-screen flex flex-col items-center justify-center text-center">
 				<div>
 					{/* Name */}
