@@ -31,12 +31,12 @@ footer {
 }
 
 .tiptap-editor {
-  border: solid white 3;
+  border: none;
 }
 
 .tiptap-editor .ProseMirror {
   min-height: 18rem;
-  padding: 1rem;
+  /* padding: 1rem; */
   outline: none;
 }
 
@@ -142,3 +142,29 @@ footer {
 }
 
 /* , Arial, Helvetica, sans-serif */
+
+
+
+/* width */
+::-webkit-scrollbar {
+  display: none;
+  height: 9px;
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #1a1a1a;
+  border-radius: 5px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 5px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}

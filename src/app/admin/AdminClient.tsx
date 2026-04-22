@@ -4,8 +4,11 @@ import Tiptap from "../components/TipTap";
 import { useEffect, useRef, useState } from "react";
 import { useFileUpload } from "@/src/hooks/useFileUpload";
 
+import Link from "next/link";
 // Icons
 import { FaChevronDown } from "react-icons/fa";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCircleArrowLeft } from "@fortawesome/free-solid-svg-icons";
 
 const DRAFT_STORAGE_KEY = "admin.projectPostDraft";
 
@@ -162,6 +165,7 @@ interface AdminClientProps {
 }
 
 export default function AdminClient({ adminSecret }: AdminClientProps) {
+	const [focused, setFocused] = useState(false);
 	const [expanded, setExpanded] = useState(true);
 	const [postType, setPostType] = useState<PostType>("project");
 	const [title, setTitle] = useState("");
@@ -198,6 +202,19 @@ export default function AdminClient({ adminSecret }: AdminClientProps) {
 	const { uploadState, uploadFile } = useFileUpload();
 
 	useEffect(() => {
+		const keydownHandler = (e: any) => {
+			console.log(e.code);
+			// Quit fullscreen editor
+			if (e["code"] === "Escape") {
+				setFocused(false);
+			}
+			// Save file
+
+			return () => {
+				document.removeEventListener("keydown", keydownHandler);
+			};
+		};
+		document.addEventListener("keydown", keydownHandler);
 		const loadDraft = async () => {
 			if (typeof window === "undefined") {
 				return;
@@ -659,13 +676,13 @@ export default function AdminClient({ adminSecret }: AdminClientProps) {
 								placeholder="Title"
 								value={title}
 								onChange={handleTitleChange}
-								className="border-3 rounded-2xl h-10 p-2 flex"
+								className="border-3 rounded-2xl h-10 p-2 flex border-mist-700"
 							></input>
 							<input
 								placeholder="Slug"
 								value={slug}
 								onChange={handleSlugChange}
-								className="border-3 rounded-2xl h-10 p-2"
+								className="border-3 rounded-2xl h-10 p-2 border-mist-700"
 							></input>
 							<input
 								type="date"
@@ -673,7 +690,7 @@ export default function AdminClient({ adminSecret }: AdminClientProps) {
 								onChange={(event) =>
 									setDate(event.target.value)
 								}
-								className="border-3 rounded-2xl h-10 p-2"
+								className="border-3 rounded-2xl h-10 p-2 border-mist-700"
 							></input>
 							{postType === "blog" && (
 								<input
@@ -682,7 +699,7 @@ export default function AdminClient({ adminSecret }: AdminClientProps) {
 									onChange={(event) =>
 										setSubtitle(event.target.value)
 									}
-									className="border-3 rounded-2xl h-10 p-2"
+									className="border-3 rounded-2xl h-10 p-2 border-mist-700"
 								></input>
 							)}
 							{postType === "project" && (
@@ -693,7 +710,7 @@ export default function AdminClient({ adminSecret }: AdminClientProps) {
 										onChange={(event) =>
 											setAuthor(event.target.value)
 										}
-										className="border-3 rounded-2xl p-2"
+										className="border-3 rounded-2xl p-2 border-mist-700"
 									></input>
 									<input
 										placeholder="Description"
@@ -701,7 +718,7 @@ export default function AdminClient({ adminSecret }: AdminClientProps) {
 										onChange={(event) =>
 											setDescription(event.target.value)
 										}
-										className="border-3 rounded-2xl h-10 p-2 pt-5 pb-30"
+										className="border-3 rounded-2xl h-10 p-2 pt-5 pb-30 border-mist-700"
 									></input>
 									<input
 										placeholder="Repository URL (optional)"
@@ -709,7 +726,7 @@ export default function AdminClient({ adminSecret }: AdminClientProps) {
 										onChange={(event) =>
 											setRepoUrl(event.target.value)
 										}
-										className="border-3 rounded-2xl h-10 p-2"
+										className="border-3 rounded-2xl h-10 p-2 border-mist-700"
 									></input>
 									<input
 										placeholder="imagePath (thumbnail image URL)"
@@ -717,7 +734,7 @@ export default function AdminClient({ adminSecret }: AdminClientProps) {
 										onChange={(event) =>
 											setImagePath(event.target.value)
 										}
-										className="border-3 rounded-2xl h-10 p-2"
+										className="border-3 rounded-2xl h-10 p-2 border-mist-700"
 									></input>
 									<input
 										placeholder="modelPath (thumbnail model URL)"
@@ -725,7 +742,7 @@ export default function AdminClient({ adminSecret }: AdminClientProps) {
 										onChange={(event) =>
 											setModelPath(event.target.value)
 										}
-										className="border-3 rounded-2xl h-10 p-2"
+										className="border-3 rounded-2xl h-10 p-2 border-mist-700"
 									></input>
 									<div className="flex flex-col gap-2">
 										<input
@@ -737,7 +754,7 @@ export default function AdminClient({ adminSecret }: AdminClientProps) {
 													event,
 												);
 											}}
-											className="hidden"
+											className="hidden border-mist-700"
 										/>
 										<div className="flex flex-wrap items-center gap-3">
 											<button
@@ -745,7 +762,7 @@ export default function AdminClient({ adminSecret }: AdminClientProps) {
 												onClick={() =>
 													thumbnailInputRef.current?.click()
 												}
-												className="inline-block bg-cyan-700 hover:bg-cyan-600 p-2 pr-3 pl-3 rounded-full font-medium text-white"
+												className="inline-block bg-blue-800 hover:bg-blue-700 p-2 pr-3 pl-3 rounded-full font-medium text-white"
 											>
 												Upload Thumbnail (Image / GLB)
 											</button>
@@ -783,7 +800,7 @@ export default function AdminClient({ adminSecret }: AdminClientProps) {
 						</div>
 						<div className="mb-3 text-sm text-zinc-300">
 							Drop image files directly into the editor. Images
-							are cached until Publish, then uploaded to
+							are cached until Publish, then uploaded to{" "}
 							<span className="font-semibold">
 								{sanitizeSlugInput(
 									slug || toCamelSlug(title),
@@ -792,12 +809,52 @@ export default function AdminClient({ adminSecret }: AdminClientProps) {
 							</span>
 							.
 						</div>
-						<Tiptap
-							key={editorSeed}
-							onImageDropUpload={handleEditorImageCache}
-							onContentChange={setEditorContent}
-							initialContent={editorContent}
-						></Tiptap>
+						<div
+							className={
+								focused
+									? "fixed inset-0 bg-black opacity-80 w-full h-full z-998"
+									: ""
+							}
+						></div>
+						<div
+							className={
+								focused
+									? "fixed z-999 bg-mist-950 w-full h-full self-center top-0 overflow-y-scroll border-2 border-orange-400 rounded-2xl pl-[30px] pr-[30px] xl:pl-[25vw] xl:pr-[25vw]"
+									: "border-3 border-white rounded-2xl p-2"
+							}
+						>
+							{focused && (
+								<div className="mt-10">
+									<button
+										onClick={() => setFocused(false)}
+										className="inline-flex items-center justify-center shrink-0"
+									>
+										<FontAwesomeIcon
+											icon={faCircleArrowLeft}
+											className="w-6 h-6 hover:text-gray-400 transition-colors duration-200 cursor-pointer"
+											size="xl"
+										/>
+									</button>
+									<div className="pt-[100px]">
+										<h1 className="title text-3xl xl:text-5xl font-bold mb-1.5">
+											{title}
+										</h1>
+										<h2 className="date xl:text-xl font-bold">
+											{date} • {author}
+										</h2>
+										<div className="bg-gray-500 w-full h-[1px] mt-3 mb-5"></div>
+									</div>
+								</div>
+							)}
+
+							<Tiptap
+								key={editorSeed}
+								onImageDropUpload={handleEditorImageCache}
+								onContentChange={setEditorContent}
+								initialContent={editorContent}
+								onFocus={() => setFocused(true)}
+							></Tiptap>
+						</div>
 						<div className="mt-3 min-h-6 text-sm">
 							{uploadState.isUploading &&
 								uploadState.progress && (

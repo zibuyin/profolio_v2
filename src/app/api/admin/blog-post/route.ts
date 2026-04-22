@@ -51,6 +51,7 @@ function formatDate(raw: string): string {
 export async function POST(request: NextRequest) {
 	try {
 		const adminSecret = process.env.ADMIN_SECRET;
+		const branch = process.env.BRANCH
 		if (adminSecret) {
 			const authHeader = request.headers.get("Authorization");
 			const token = authHeader?.startsWith("Bearer ") ? authHeader.slice(7) : null;
@@ -90,12 +91,13 @@ export async function POST(request: NextRequest) {
 
 		await fs.mkdir(targetDir, { recursive: true });
 		await fs.writeFile(targetPath, fileContent, "utf8");
-		await runPostPublish({
-			filePath: targetPath,
-			postType: "blog",
-			slug,
-		});
-
+		if (branch != "DEVELOPING"){
+			await runPostPublish({
+				filePath: targetPath,
+				postType: "blog",
+				slug,
+			});
+		}
 		return NextResponse.json({ success: true, slug, path: targetPath });
 	} catch (error) {
 		console.error("Failed to save blog post:", error);

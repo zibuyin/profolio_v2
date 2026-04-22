@@ -8,12 +8,16 @@ import { TextSelection } from "@tiptap/pm/state";
 interface TiptapProps {
 	onImageDropUpload?: (file: File) => Promise<string | null>;
 	onContentChange?: (content: string) => void;
+	onFocus?: ({ editor, event }: any) => void;
+	onClick?: ({ editor, event }: any) => void;
 	initialContent?: string;
 }
 
 const Tiptap = ({
 	onImageDropUpload,
 	onContentChange,
+	onFocus,
+	onClick,
 	initialContent,
 }: TiptapProps) => {
 	const editor = useEditor({
@@ -29,10 +33,17 @@ const Tiptap = ({
 		onCreate: ({ editor }) => {
 			onContentChange?.(editor.getHTML());
 		},
+		onFocus: ({ editor, event }) => {
+			onFocus?.({ editor, event });
+		},
 		onUpdate: ({ editor }) => {
 			onContentChange?.(editor.getHTML());
 		},
 		editorProps: {
+			handleClick: (view, event) => {
+				onClick?.({ editor, event });
+				return false;
+			},
 			handleDrop: (view, event, _slice, moved) => {
 				if (moved || !onImageDropUpload) {
 					return false;

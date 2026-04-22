@@ -12,7 +12,7 @@ export default function RootLayout({
 		<html lang="en" className="h-full antialiased">
 			<body className="min-h-full flex flex-col">
 				<NextIntlClientProvider>{children}</NextIntlClientProvider>
-				<CopyDetection></CopyDetection>
+				{/* <CopyDetection></CopyDetection> */}
 				<Footer />
 			</body>
 		</html>
