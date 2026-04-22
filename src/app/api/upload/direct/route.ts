@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { auth } from '@clerk/nextjs/server';
 import { PutObjectCommand } from '@aws-sdk/client-s3';
 import { r2Client, R2_CONFIG, handleR2Error } from '@/src/lib/r2-client';
 
@@ -27,18 +26,7 @@ export async function POST(request: NextRequest) {
       }
     }
 
-    const hasClerkKeys = Boolean(
-      process.env.CLERK_SECRET_KEY && process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
-    );
-
-    let uploaderId = 'local-dev';
-    if (hasClerkKeys) {
-      const { userId } = await auth();
-      if (!userId) {
-        return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-      }
-      uploaderId = userId;
-    }
+    const uploaderId = 'admin';
 
     const formData = await request.formData();
     const file = formData.get('file');

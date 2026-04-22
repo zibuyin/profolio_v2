@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { auth } from '@clerk/nextjs/server';
 import { PutObjectCommand } from '@aws-sdk/client-s3';
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 import { r2Client, R2_CONFIG } from '@/src/lib/r2-client';
@@ -7,18 +6,16 @@ import { nanoid } from 'nanoid';
 
 export async function POST(request: NextRequest) {
   try {
-    const hasClerkKeys = Boolean(
-      process.env.CLERK_SECRET_KEY && process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
-    );
-
-    let uploaderId = 'local-dev';
-    if (hasClerkKeys) {
-      const { userId } = await auth();
-      if (!userId) {
+    const adminSecret = process.env.ADMIN_SECRET;
+    if (adminSecret) {
+      const authHeader = request.headers.get('Authorization');
+      const token = authHeader?.startsWith('Bearer ') ? authHeader.slice(7) : null;
+      if (token !== adminSecret) {
         return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
       }
-      uploaderId = userId;
     }
+
+    const uploaderId = 'admin';
     
     // Parse request body
     const { fileName, fileType, fileSize, documentType } = await request.json();
