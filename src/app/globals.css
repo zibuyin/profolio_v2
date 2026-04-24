@@ -141,6 +141,15 @@ footer {
   color: inherit;
 }
 
+.tiptap-editor .ProseMirror code {
+  background-color: #1d2943;
+  /* background-color: red; */
+  padding: 2;
+  padding-left: 6;
+  padding-right: 6;
+  color: inherit;
+}
+
 .post-content blockquote,
 .tiptap-editor .ProseMirror blockquote {
   border-left: 4px solid oklch(74.6% 0.16 232.661);
