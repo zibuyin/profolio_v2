@@ -11,7 +11,7 @@
   <img src="https://img.shields.io/badge/MIT-LICENSE-s?style=flat&logoColor=white&color=blue" />
 </div>
 
-<img width="1987" height="1180" alt="Screenshot 2026-04-22 at 22 29 41" src="https://github.com/user-attachments/assets/d848812c-efb8-4d9c-bd91-895f076421c4" />
+https://github.com/user-attachments/assets/0f3f9251-946e-413a-b776-33ea63194015
 
 ## Features
 - Auto redeploy on update using [PPOD](https://github.com/zibuyin/ppod)
@@ -22,12 +22,14 @@
 - Media storage using Cloudflare R2
 - [Status page](https://status.nathanyin.com) and badge 
 
-## Images
+## Demo
+### Live MD Editor
+https://github.com/user-attachments/assets/c1ad93ca-5494-42f3-b14f-e52d41ab73e3
+
+
+
 ### A projects post
 <img width="2086" height="1210" alt="Screenshot 2026-04-22 at 22 35 50" src="https://github.com/user-attachments/assets/0aca86ba-3d7b-4532-9e0d-1365b50fc016" />
-
-### Live Markdown editor
-<img width="1531" height="1230" alt="Screenshot 2026-04-22 at 22 39 33" src="https://github.com/user-attachments/assets/6e89c8b4-a90a-4d44-bc43-50ca88f3e5d7" />
 
 ## Special Thanks
 
