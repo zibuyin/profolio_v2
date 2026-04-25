@@ -2,6 +2,9 @@
 </h1>
 <p align="center">The project name <i>Profolio</i> is <strong>definitely</strong> not a typo, it stands for (pro)fessional portfolio</p>
 <div align="center">
+  <a  href="https://deepwiki.com/zibuyin/profolio_v2">Deep Wiki</a>
+</div>
+<div align="center">
   <a href="https://uptime.betterstack.com/?utm_source=status_badge" >
     <img src="https://uptime.betterstack.com/status-badges/v1/monitor/2kclb.svg" />
   </a>
