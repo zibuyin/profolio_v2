@@ -70,6 +70,12 @@ function normalizeAssetUrl(raw: string) {
 function normalizePublishedContent(content: string) {
 	let normalized = content;
 
+	// Convert escaped markdown links back into regular markdown links.
+	normalized = normalized.replace(
+		/\\\[([^\]]+)\\\]\((https?:\/\/[^\s)]+)\)/g,
+		"[$1]($2)",
+	);
+
 	// Remove inline HTML image tags with blob URLs.
 	normalized = normalized.replace(/<img[^>]*src=["']blob:[^"']*["'][^>]*>/gi, "");
 

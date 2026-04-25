@@ -37,6 +37,12 @@ interface LocalDraft {
 	thumbnailPurpose: ThumbnailPurpose | "";
 }
 
+interface CachedEditorImage {
+	file: File;
+	localUrl: string;
+	dataUrl: string;
+}
+
 function toCamelSlug(title: string) {
 	const words = title
 		.toLowerCase()
@@ -188,6 +194,9 @@ export default function AdminClient({ adminSecret }: AdminClientProps) {
 	const [cachedImageFile, setCachedImageFile] = useState<File | null>(null);
 	const [cachedImageUrl, setCachedImageUrl] = useState<string | null>(null);
 	const [cachedImageDataUrl, setCachedImageDataUrl] = useState("");
+	const [cachedEditorImages, setCachedEditorImages] = useState<
+		CachedEditorImage[]
+	>([]);
 	const [thumbnailFile, setThumbnailFile] = useState<File | null>(null);
 	const [thumbnailPurpose, setThumbnailPurpose] = useState<
 		ThumbnailPurpose | ""
@@ -265,6 +274,13 @@ export default function AdminClient({ adminSecret }: AdminClientProps) {
 						parsed.cachedImageType || "image/webp",
 					);
 					setCachedImageFile(reconstructedImage);
+					setCachedEditorImages([
+						{
+							file: reconstructedImage,
+							localUrl: parsed.cachedImageDataUrl,
+							dataUrl: parsed.cachedImageDataUrl,
+						},
+					]);
 				}
 
 				if (parsed.thumbnailDataUrl && parsed.thumbnailPurpose) {
@@ -299,8 +315,17 @@ export default function AdminClient({ adminSecret }: AdminClientProps) {
 
 	useEffect(() => {
 		return () => {
-			if (cachedImageUrl && cachedImageUrl.startsWith("blob:")) {
-				URL.revokeObjectURL(cachedImageUrl);
+			const urls = new Set<string>();
+			for (const image of cachedEditorImages) {
+				urls.add(image.localUrl);
+			}
+			if (cachedImageUrl) {
+				urls.add(cachedImageUrl);
+			}
+			for (const url of urls) {
+				if (url.startsWith("blob:")) {
+					URL.revokeObjectURL(url);
+				}
 			}
 			if (
 				thumbnailPreviewUrl &&
@@ -309,7 +334,7 @@ export default function AdminClient({ adminSecret }: AdminClientProps) {
 				URL.revokeObjectURL(thumbnailPreviewUrl);
 			}
 		};
-	}, [cachedImageUrl, thumbnailPreviewUrl]);
+	}, [cachedEditorImages, cachedImageUrl, thumbnailPreviewUrl]);
 
 	// Keep saveDraftRef pointing to the latest version of saveDraftLocally
 	useEffect(() => {
@@ -358,16 +383,18 @@ export default function AdminClient({ adminSecret }: AdminClientProps) {
 			return null;
 		}
 
-		if (cachedImageUrl) {
-			URL.revokeObjectURL(cachedImageUrl);
-		}
-
 		const localUrl = URL.createObjectURL(file);
 		const dataUrl = await fileToDataUrl(file);
+		setCachedEditorImages((prev) => [
+			...prev,
+			{ file, localUrl, dataUrl },
+		]);
 		setCachedImageFile(file);
 		setCachedImageUrl(localUrl);
 		setCachedImageDataUrl(dataUrl);
-		setSaveMessage("Image cached locally. It will upload on Publish.");
+		setSaveMessage(
+			"Image cached locally. All dropped images will upload on Publish.",
+		);
 		setSaveError(null);
 		return localUrl;
 	};
@@ -422,7 +449,14 @@ export default function AdminClient({ adminSecret }: AdminClientProps) {
 		}
 
 		let contentForDraft = editorContent;
-		if (cachedImageUrl && cachedImageDataUrl) {
+		if (cachedEditorImages.length > 0) {
+			for (const image of cachedEditorImages) {
+				contentForDraft = contentForDraft.replaceAll(
+					image.localUrl,
+					image.dataUrl,
+				);
+			}
+		} else if (cachedImageUrl && cachedImageDataUrl) {
 			contentForDraft = contentForDraft.replaceAll(
 				cachedImageUrl,
 				cachedImageDataUrl,
@@ -458,6 +492,53 @@ export default function AdminClient({ adminSecret }: AdminClientProps) {
 		setSaveMessage("Draft saved in browser local storage.");
 	};
 
+	const uploadCachedEditorImages = async (
+		content: string,
+		normalizedSlug: string,
+	) => {
+		let nextContent = content;
+		const queuedImages =
+			cachedEditorImages.length > 0
+				? cachedEditorImages
+				: cachedImageFile && cachedImageUrl && cachedImageDataUrl
+					? [
+						{
+							file: cachedImageFile,
+							localUrl: cachedImageUrl,
+							dataUrl: cachedImageDataUrl,
+						},
+					]
+					: [];
+
+		for (const image of queuedImages) {
+			const uploaded = await uploadFile(
+				image.file,
+				normalizedSlug,
+				undefined,
+				adminSecret,
+			);
+			if (!uploaded.success || !uploaded.fileUrl) {
+				throw new Error(uploaded.error || "Failed to upload cached image");
+			}
+
+			nextContent = nextContent.replaceAll(image.localUrl, uploaded.fileUrl);
+			nextContent = nextContent.replaceAll(image.dataUrl, uploaded.fileUrl);
+		}
+
+		for (const image of queuedImages) {
+			if (image.localUrl.startsWith("blob:")) {
+				URL.revokeObjectURL(image.localUrl);
+			}
+		}
+
+		setCachedEditorImages([]);
+		setCachedImageFile(null);
+		setCachedImageUrl(null);
+		setCachedImageDataUrl("");
+
+		return nextContent;
+	};
+
 	const publishPost = async () => {
 		const normalizedSlug = sanitizeSlugInput(slug || toCamelSlug(title));
 		if (!title.trim()) {
@@ -482,34 +563,10 @@ export default function AdminClient({ adminSecret }: AdminClientProps) {
 
 			// Blog post: simpler publish (no thumbnail uploads)
 			if (postType === "blog") {
-				if (cachedImageFile) {
-					const uploaded = await uploadFile(
-						cachedImageFile,
-						normalizedSlug,
-					);
-					if (!uploaded.success || !uploaded.fileUrl) {
-						throw new Error(
-							uploaded.error || "Failed to upload cached image",
-						);
-					}
-					if (cachedImageUrl) {
-						contentToSave = contentToSave.replaceAll(
-							cachedImageUrl,
-							uploaded.fileUrl,
-						);
-						if (cachedImageUrl.startsWith("blob:"))
-							URL.revokeObjectURL(cachedImageUrl);
-					}
-					if (cachedImageDataUrl) {
-						contentToSave = contentToSave.replaceAll(
-							cachedImageDataUrl,
-							uploaded.fileUrl,
-						);
-					}
-					setCachedImageFile(null);
-					setCachedImageUrl(null);
-					setCachedImageDataUrl("");
-				}
+				contentToSave = await uploadCachedEditorImages(
+					contentToSave,
+					normalizedSlug,
+				);
 
 				const response = await fetch("/api/admin/blog-post", {
 					method: "POST",
@@ -542,39 +599,10 @@ export default function AdminClient({ adminSecret }: AdminClientProps) {
 
 			let resolvedImagePath = imagePath.trim();
 			let resolvedModelPath = modelPath.trim();
-
-			if (cachedImageFile) {
-				const uploaded = await uploadFile(
-					cachedImageFile,
-					normalizedSlug,
-					undefined,
-					adminSecret,
-				);
-				if (!uploaded.success || !uploaded.fileUrl) {
-					throw new Error(
-						uploaded.error || "Failed to upload cached image",
-					);
-				}
-				resolvedImagePath = uploaded.fileUrl;
-				if (cachedImageUrl) {
-					contentToSave = contentToSave.replaceAll(
-						cachedImageUrl,
-						uploaded.fileUrl,
-					);
-					if (cachedImageUrl.startsWith("blob:")) {
-						URL.revokeObjectURL(cachedImageUrl);
-					}
-				}
-				if (cachedImageDataUrl) {
-					contentToSave = contentToSave.replaceAll(
-						cachedImageDataUrl,
-						uploaded.fileUrl,
-					);
-				}
-				setCachedImageFile(null);
-				setCachedImageUrl(null);
-				setCachedImageDataUrl("");
-			}
+			contentToSave = await uploadCachedEditorImages(
+				contentToSave,
+				normalizedSlug,
+			);
 
 			if (thumbnailFile && thumbnailPurpose) {
 				const uploadedThumbnailUrl = await uploadAsset(
@@ -836,7 +864,7 @@ export default function AdminClient({ adminSecret }: AdminClientProps) {
 								{sanitizeSlugInput(
 									slug || toCamelSlug(title),
 								) || "yourSlug"}
-								/picture.webp
+								/images/*.webp
 							</span>
 							.
 						</div>
@@ -894,13 +922,13 @@ export default function AdminClient({ adminSecret }: AdminClientProps) {
 										{uploadState.progress.percentage}%
 									</span>
 								)}
-							{cachedImageFile && !uploadState.isUploading && (
+							{cachedEditorImages.length > 0 && !uploadState.isUploading && (
 								<span className="text-amber-400">
-									Image cached and waiting for Publish
+									{cachedEditorImages.length} image(s) cached and waiting for Publish
 								</span>
 							)}
 							{saveMessage &&
-								cachedImageFile &&
+								cachedEditorImages.length > 0 &&
 								!uploadState.isUploading && (
 									<span className="block"> </span>
 								)}

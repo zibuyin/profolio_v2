@@ -18,7 +18,8 @@ export default function CodeBlock({
 	const match = /language-(\w+)/.exec(className ?? "");
 	const language = match ? match[1] : "text";
 	const code = String(children).replace(/\n$/, "");
-	const shouldRenderInline = Boolean(inline) || (!match && !code.includes("\n"));
+	const shouldRenderInline =
+		Boolean(inline) || (!match && !code.includes("\n"));
 
 	if (shouldRenderInline) {
 		return <code className={className}>{children}</code>;

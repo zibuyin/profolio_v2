@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { PutObjectCommand } from '@aws-sdk/client-s3';
 import { r2Client, R2_CONFIG, handleR2Error } from '@/src/lib/r2-client';
+import { randomUUID } from 'crypto';
 
 type UploadPurpose = 'editor-image' | 'thumbnail-image' | 'thumbnail-model';
 
@@ -62,7 +63,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'File too large' }, { status: 400 });
     }
 
-    let fileKey = `${slug}/picture.webp`;
+    let fileKey = `${slug}/images/${Date.now()}-${randomUUID().slice(0, 8)}.webp`;
     if (purpose === 'thumbnail-image') {
       const safeExt = extension || 'webp';
       fileKey = `${slug}/thumbnail.${safeExt}`;
