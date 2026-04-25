@@ -64,7 +64,7 @@ export default function Home() {
 					</div>
 				</div>
 
-				<div className="pt-[100vh] mt-[0vh] bg-gradient-to-b from-transparent via-[#0a0a0a] to-[#0a0a0a] dark:via-[#0a0a0a] dark:to-[#0a0a0a] via-zinc-50 to-zinc-50 z-10 relative pointer-events-none">
+				<div className="pt-[90vh] mt-[0vh] bg-gradient-to-b from-transparent dark:via-[#0a0a0a] dark:to-[#0a0a0a] via-zinc-50 to-zinc-50 z-10 relative pointer-events-none">
 					<section id="projects" className="pointer-events-auto">
 						<div className="h-30"></div>
 
