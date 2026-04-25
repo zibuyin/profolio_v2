@@ -163,6 +163,74 @@ footer {
   /* padding-bottom: 0.2rem; */
 }
 
+.post-content .admonition {
+  border-left: 4px solid #64748b;
+  background: #f8fafc;
+  color: #0f172a;
+  border-radius: 0.5rem;
+  padding: 0.875rem 1rem;
+  margin: 1rem 0;
+}
+
+.post-content .admonition-info {
+  border-left-color: #14a6ea;
+  background: #e0f2fe;
+  color: #075985;
+}
+
+.post-content .admonition-tip {
+  border-left-color: #06d996;
+  background: #d1fae5;
+  color: #065f46;
+}
+
+.post-content .admonition-warning {
+  border-left-color: #d97706;
+  background: #fef3c7;
+  color: #78350f;
+}
+
+.post-content .admonition-danger {
+  border-left-color: #d90606;
+  background: #fee2e2;
+  color: #7f1d1d;
+}
+
+@media (prefers-color-scheme: dark) {
+  .post-content .admonition {
+    background: #1e293b;
+    color: #e2e8f0;
+  }
+
+  .post-content .admonition-info {
+    background: #0c2340;
+    color: #7dd3fc;
+  }
+
+  .post-content .admonition-tip {
+    background: #064e3b;
+    color: #86efac;
+  }
+
+  .post-content .admonition-warning {
+    background: #78350f;
+    color: #fbbf24;
+  }
+
+  .post-content .admonition-danger {
+    background: #7f1d1d;
+    color: #fca5a5;
+  }
+}
+
+.post-content .admonition> :first-child {
+  margin-top: 0;
+}
+
+.post-content .admonition> :last-child {
+  margin-bottom: 0;
+}
+
 
 .post-content img,
 .tiptap-editor .ProseMirror img {

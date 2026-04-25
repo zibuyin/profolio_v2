@@ -7,10 +7,12 @@ import Comments from "@/src/app/components/giscus";
 import Model from "@/src/app/ui/modelRenderers/renderModel";
 import CodeBlock from "@/src/app/components/CodeBlock";
 import { makeHeading } from "@/src/app/components/HeadingWithAnchor";
+import { remarkAdmonitions } from "@/src/lib/remarkAdmonitions";
 import fs from "fs";
 import path from "path";
 import loadMd from "@/utils/loadMd";
 import type { Metadata, ResolvingMetadata } from "next";
+import remarkDirective from "remark-directive";
 
 type generateMetadataProps = {
 	params: Promise<{ slug: string }>;
@@ -60,7 +62,12 @@ export default async function Page(props: {
 		author?: string;
 	}>({
 		source,
-		options: { parseFrontmatter: true },
+		options: {
+			parseFrontmatter: true,
+			mdxOptions: {
+				remarkPlugins: [remarkDirective, remarkAdmonitions],
+			},
+		},
 		components: {
 			Model,
 			code: (props) => <CodeBlock {...props} />,
