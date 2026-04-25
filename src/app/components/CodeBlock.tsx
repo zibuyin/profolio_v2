@@ -7,12 +7,22 @@ import { nord } from "react-syntax-highlighter/dist/esm/styles/hljs";
 interface CodeBlockProps {
 	className?: string;
 	children?: React.ReactNode;
+	inline?: boolean;
 }
 
-export default function CodeBlock({ className, children }: CodeBlockProps) {
+export default function CodeBlock({
+	className,
+	children,
+	inline,
+}: CodeBlockProps) {
 	const match = /language-(\w+)/.exec(className ?? "");
 	const language = match ? match[1] : "text";
 	const code = String(children).replace(/\n$/, "");
+	const shouldRenderInline = Boolean(inline) || (!match && !code.includes("\n"));
+
+	if (shouldRenderInline) {
+		return <code className={className}>{children}</code>;
+	}
 
 	return (
 		<SyntaxHighlighter

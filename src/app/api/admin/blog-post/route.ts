@@ -33,6 +33,52 @@ function isValidSlug(slug: string) {
 	return /^[a-zA-Z0-9]+$/.test(slug);
 }
 
+function normalizeAssetUrl(raw: string) {
+	const cdnBase = (process.env.R2_PUBLIC_URL || "").trim().replace(/\/+$/, "");
+	const value = raw.trim();
+
+	if (!value) {
+		return "";
+	}
+
+	if (/^blob:/i.test(value)) {
+		return "";
+	}
+
+	if (/^(https?:|data:)/i.test(value)) {
+		return value;
+	}
+
+	if (!cdnBase) {
+		return value;
+	}
+
+	const normalizedPath = value.replace(/^\/+/, "");
+	return `${cdnBase}/${normalizedPath}`;
+}
+
+function normalizePublishedContent(content: string) {
+	let normalized = content;
+
+	// Remove inline HTML image tags with blob URLs.
+	normalized = normalized.replace(/<img[^>]*src=["']blob:[^"']*["'][^>]*>/gi, "");
+
+	// Normalize markdown image URLs to CDN and remove unresolved blob URLs.
+	normalized = normalized.replace(
+		/!\[([^\]]*)\]\(([^)\s]+)(\s+"[^"]*")?\)/g,
+		(_match, altText: string, url: string, titlePart: string | undefined) => {
+			const resolved = normalizeAssetUrl(url);
+			if (!resolved) {
+				return "";
+			}
+
+			return `![${altText}](${resolved}${titlePart || ""})`;
+		},
+	);
+
+	return normalized;
+}
+
 function formatDate(raw: string): string {
 	const isoMatch = /^(\d{4})-(\d{2})-(\d{2})$/.exec(raw.trim());
 	if (isoMatch) {
@@ -70,7 +116,9 @@ export async function POST(request: NextRequest) {
 			);
 		}
 
-		const bodyContent = normalizeToMarkdown(payload.content || "");
+		const bodyContent = normalizePublishedContent(
+			normalizeToMarkdown(payload.content || ""),
+		);
 		if (!bodyContent) {
 			return NextResponse.json(
 				{ error: "Post content cannot be empty" },
