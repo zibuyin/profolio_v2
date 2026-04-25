@@ -54,9 +54,6 @@ export default function Welcome() {
 					ago)
 				</p> */}
 				</div>
-				<div className="absolute bottom-20 left-1/2 transform -translate-x-1/2">
-					<ScrollIndicator />
-				</div>
 			</div>
 		</>
 	);

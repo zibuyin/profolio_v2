@@ -55,13 +55,17 @@ export default function Home() {
 	return (
 		<div className="flex flex-col w-auto flex-1 justify-center pl-[20px] pr-[20px] md:pl-[15vw] md:pr-[15vw] bg-zinc-50 font-sans dark:bg-[#0a0a0a]">
 			<main>
-				<div className="fixed inset-0 flex items-center justify-center">
-					{/* <ScrollIndicator></ScrollIndicator> */}
-					<Welcome></Welcome>
+				<div className="fixed inset-0 flex items-center justify-center pointer-events-none">
+					<div className="absolute bottom-20 left-1/2 z-5 pointer-events-auto transform -translate-x-1/2">
+						<ScrollIndicator></ScrollIndicator>
+					</div>
+					<div className="relative z-0 pointer-events-none">
+						<Welcome></Welcome>
+					</div>
 				</div>
-				{/* 60/40 ratio for making to transparent before moving, */}
-				<div className="pt-[80vh] mt-[50vh] bg-gradient-to-b from-transparent via-[#0a0a0a] to-[#0a0a0a] dark:via-[#0a0a0a] dark:to-[#0a0a0a] via-zinc-50 to-zinc-50 z-10 relative">
-					<section id="projects">
+
+				<div className="pt-[100vh] mt-[0vh] bg-gradient-to-b from-transparent via-[#0a0a0a] to-[#0a0a0a] dark:via-[#0a0a0a] dark:to-[#0a0a0a] via-zinc-50 to-zinc-50 z-10 relative pointer-events-none">
+					<section id="projects" className="pointer-events-auto">
 						<div className="h-30"></div>
 
 						<Projects></Projects>
@@ -69,16 +73,16 @@ export default function Home() {
 
 					{/* Small padding */}
 
-					<section id="about">
+					<section id="about" className="pointer-events-auto">
 						<div className="h-30"></div>
 						<AboutMe></AboutMe>
 					</section>
 
-					<section id="blog">
+					<section id="blog" className="pointer-events-auto">
 						<div className="h-30"></div>
 						<BlogSection></BlogSection>
 					</section>
-					<section id="contacts">
+					<section id="contacts" className="pointer-events-auto">
 						<div className="h-30"></div>
 						<Contacts></Contacts>
 					</section>

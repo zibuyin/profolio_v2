@@ -85,6 +85,8 @@ export default function Model({ path }: ModelProps) {
 					</Suspense>
 				</ModelErrorBoundary>
 				<OrbitControls
+					autoRotate={true}
+					autoRotateSpeed={0.6}
 					enableZoom={true}
 					dampingFactor={0.2}
 					enableDamping={true}
