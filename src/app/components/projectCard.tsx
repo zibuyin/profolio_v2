@@ -24,7 +24,7 @@ export default function ProjectCard({
 	const parsedUrl = `project/${slug}`;
 	return (
 		<div>
-			<div className="flex flex-col xl:flex-row justify-between">
+			<div className="flex flex-col-reverse xl:flex-row justify-between">
 				<div className="text-section text-center md:text-left">
 					<h2 className="text-2xl md:text-3xl font-semibold">
 						{title}
