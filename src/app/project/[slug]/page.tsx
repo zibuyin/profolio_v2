@@ -6,6 +6,7 @@ import { faCircleArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import Comments from "@/src/app/components/giscus";
 import Model from "@/src/app/ui/modelRenderers/renderModel";
 import CodeBlock from "@/src/app/components/CodeBlock";
+import { makeHeading } from "@/src/app/components/HeadingWithAnchor";
 import fs from "fs";
 import path from "path";
 import loadMd from "@/utils/loadMd";
@@ -63,6 +64,12 @@ export default async function Page(props: {
 		components: {
 			Model,
 			code: (props) => <CodeBlock {...props} />,
+			h1: makeHeading("h1"),
+			h2: makeHeading("h2"),
+			h3: makeHeading("h3"),
+			h4: makeHeading("h4"),
+			h5: makeHeading("h5"),
+			h6: makeHeading("h6"),
 		},
 	});
 
