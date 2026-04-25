@@ -385,10 +385,7 @@ export default function AdminClient({ adminSecret }: AdminClientProps) {
 
 		const localUrl = URL.createObjectURL(file);
 		const dataUrl = await fileToDataUrl(file);
-		setCachedEditorImages((prev) => [
-			...prev,
-			{ file, localUrl, dataUrl },
-		]);
+		setCachedEditorImages((prev) => [...prev, { file, localUrl, dataUrl }]);
 		setCachedImageFile(file);
 		setCachedImageUrl(localUrl);
 		setCachedImageDataUrl(dataUrl);
@@ -502,12 +499,12 @@ export default function AdminClient({ adminSecret }: AdminClientProps) {
 				? cachedEditorImages
 				: cachedImageFile && cachedImageUrl && cachedImageDataUrl
 					? [
-						{
-							file: cachedImageFile,
-							localUrl: cachedImageUrl,
-							dataUrl: cachedImageDataUrl,
-						},
-					]
+							{
+								file: cachedImageFile,
+								localUrl: cachedImageUrl,
+								dataUrl: cachedImageDataUrl,
+							},
+						]
 					: [];
 
 		for (const image of queuedImages) {
@@ -518,11 +515,19 @@ export default function AdminClient({ adminSecret }: AdminClientProps) {
 				adminSecret,
 			);
 			if (!uploaded.success || !uploaded.fileUrl) {
-				throw new Error(uploaded.error || "Failed to upload cached image");
+				throw new Error(
+					uploaded.error || "Failed to upload cached image",
+				);
 			}
 
-			nextContent = nextContent.replaceAll(image.localUrl, uploaded.fileUrl);
-			nextContent = nextContent.replaceAll(image.dataUrl, uploaded.fileUrl);
+			nextContent = nextContent.replaceAll(
+				image.localUrl,
+				uploaded.fileUrl,
+			);
+			nextContent = nextContent.replaceAll(
+				image.dataUrl,
+				uploaded.fileUrl,
+			);
 		}
 
 		for (const image of queuedImages) {
@@ -922,11 +927,13 @@ export default function AdminClient({ adminSecret }: AdminClientProps) {
 										{uploadState.progress.percentage}%
 									</span>
 								)}
-							{cachedEditorImages.length > 0 && !uploadState.isUploading && (
-								<span className="text-amber-400">
-									{cachedEditorImages.length} image(s) cached and waiting for Publish
-								</span>
-							)}
+							{cachedEditorImages.length > 0 &&
+								!uploadState.isUploading && (
+									<span className="text-amber-400">
+										{cachedEditorImages.length} image(s)
+										cached and waiting for Publish
+									</span>
+								)}
 							{saveMessage &&
 								cachedEditorImages.length > 0 &&
 								!uploadState.isUploading && (

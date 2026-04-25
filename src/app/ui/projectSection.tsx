@@ -49,7 +49,7 @@ export default function Projects() {
 					<p>Hover near the edges to see the glow.</p>
 				</div>
 			</BorderGlow> */}
-			{cards}
+			<div className="flex flex-col gap-10">{cards}</div>
 		</div>
 	);
 }
