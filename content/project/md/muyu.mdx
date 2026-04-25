@@ -1,0 +1,155 @@
+---
+title: Muyu (木鱼)
+description: >-
+  A simple macOS keypress counter that lives in the menu bar and supports
+  keypress distribution visualization.
+date: 'April 25, 2026'
+author: Nathan Yin
+slug: muyu
+imagePath: 'https://pp2.cdn.nathanyin.com/muyu/thumbnail.webp'
+modelPath: ''
+repoUrl: 'https://github.com/zibuyin/muyu'
+---
+## What is it
+
+Muyu (木鱼) is a simple keypress counter that lives in your menu bar.
+
+## Features
+
+-   Privacy first, stores all data on-device, delete anytime. All in your control
+    
+-   Aesthetic menu bar item, ultra-lightweight
+    
+-   Simple graphing of keypress distributions using **matplotlib**
+    
+
+![Figure\_1.png](blob:https://blog.nathanyin.com/96788a7f-4440-4d04-847c-10f53ed8a48d)
+
+* * *
+
+## Developing Process
+
+### Keypress monitoring
+
+I first used the `keyboard` module in Python to catch keypresses; it requires a `while True` loop for it to constantly listen to keyboard presses. This is not ideal since I would need to have multiple threads running on endless loops for both the keyboard monitoring and the menubar rendering using `rumps` .
+
+I switched to using the `pynput` module for keyboard input presses because it offers a `Listener` A class that handles keyboard events asynchronously, which is useful for not needing to write an infinite loop, and is easy to integrate with `rumps` - which is heavily event-driven.
+
+```python
+def on_press(key):
+	# Update database ...
+
+def init():
+    # ...
+    listener = Listener(on_press=on_press)
+    listener.start()
+    return listener
+```
+
+### Data management
+
+To save keypress data between app restarts, I need to store it in persistent file storage rather than variables, which get cleared when the process is killed. I did this by storing all the data within a `JSON` database and parse this into a **Python dictionary** via the `json` module.
+
+This JSON database is structured like this:
+
+```json
+{
+    "total": 2497,
+    "a": 86,
+    "b": 52,
+    "c": 30,
+    "d": 47,
+    "e": 147,
+    "f": 19,
+	// ...
+}
+```
+
+Writing the keyboard presses directly to the JSON file every time a key is pressed would lead to a high IO, which would cause a higher CPU usage than necessary; instead, I chose to update the Python dictionary type variable `db_parsed` with the new value, and only dump this as JSON format to the file every 10 seconds (done via starting a separate thread for `saveDB` function).
+
+```python
+def saveDB():
+    print("DEBUG")
+    while True:
+        time.sleep(10)
+        with lock:
+            with open(db_path, 'w') as db:
+                    # db_parsed is the Python dict of the keypresses data
+                    json.dump(db_parsed, db)
+        print("Saved!")
+# ...
+
+def init():
+    threading.Thread(target=saveDB, daemon=True).start()
+```
+
+### Menubar Item
+
+This part is quite easy in comparison; I just had to call the `backend.init()` function when initialising the Rumps application, and periodically fetch the new counter data via `backend.getDB()` function, then pass the total count to the renderer that updates the counter displayed in the menubar.
+
+```python
+class muyuApp (rumps.App):
+    def __init__ (self, name="muyu", title=f"⌨️ {counterNumber}", # ...)
+        super().__init__(name, title, # ...)
+        self.total = -1
+	   # Initialize the backend (keyboard counter)
+        backend.init()
+
+	# Get the new counter data from the backend
+    @rumps.timer(0.1)
+    def updateCounter(self, _):
+            parsed_db = backend.getDB()
+            self.total = parsed_db["total"]
+            self.updateCounterUi(self)
+	
+	# Show the new count in the menu bar (title)
+    def updateCounterUi(self, _):
+        parsedTitle = "⌨️ " + str(self.total)
+        self.title = parsedTitle
+```
+
+### Plotting Keypresses
+
+I thought it would be quite interesting to plot a distribution of keypresses on a bar chart, showing which keys were pressed the most. Data plotting is done inside `graph.py` using the `matplotlib` library. I ignored the click values for modifier keys (e.g. **⌘, ^**) and the total amount in the graph by not including any data containing `Key.` their identifier and excluding the `total` field.
+
+```python
+def plotKeyboard(db):
+    x_axis = []
+    y_axis = []
+    for _, key in enumerate(db):
+        # Ignore "total" and special keys
+        if key == "total":
+            pass
+        elif "Key" in key:
+            pass
+	   # Including all other keys
+        else:
+            x_axis.append(key)
+            y_axis.append(db[key])  
+```
+
+* * *
+
+## Interesting Finds
+
+The tool generated an Interesting graph based on keypresses across 3700 presses _(Fig. 1) that demonstrates a strong correlation with the frequency of English letters in dictionaries (Fig. 2)_.
+
+Fig. 1 Graph generated across 3700 keypresses after typing this project post (Only including English characters)
+
+![Figure\_2.webp](blob:https://blog.nathanyin.com/459b4a36-e4fa-4818-8751-70dee3f1774c)
+
+Fig. 2 English letter frequency in a dictionary
+
+![Screenshot 2026-04-25 at 18.34.07.webp](blob:https://blog.nathanyin.com/e17fd26e-5f2b-4ec8-97a5-5fee23efe266)
+
+Credit: Wiki-Commons
+
+* * *
+
+## Wrap Up
+
+Overall, making this was interesting. I learnt how to use `pynput` to handle system-wide keypresses, how to make a simple menubar application using `rumps` and also basic graphing using `matplotlib` .
+
+_Hmm, why is the letter 'e' used so much in English..._
+
+> As always, the \[source code\](https://github.com/zibuyin/muyu) of this project is open source on GitHub. (P.S. Leave a star if you find it interesting. Thanks!)
