@@ -10,11 +10,11 @@ imagePath: 'https://pp2.cdn.nathanyin.com/muyu/thumbnail.png'
 modelPath: ''
 repoUrl: 'https://github.com/zibuyin/muyu'
 ---
-## What is it
+# What is it
 
 Muyu (木鱼) is a simple keypress counter that lives in your menu bar.
 
-## Features
+# Features
 
 -   Privacy first, stores all data on-device, delete anytime. All in your control
     
@@ -27,9 +27,9 @@ Muyu (木鱼) is a simple keypress counter that lives in your menu bar.
 
 * * *
 
-## Development Process
+# Development Process
 
-### Keypress monitoring
+## Keypress monitoring
 
 I first used the `keyboard` module in Python to catch keypresses; it requires a `while True` loop for it to constantly listen to keyboard presses. This is not ideal since I would need to have multiple threads running on endless loops for both the keyboard monitoring and the menubar rendering using `rumps` .
 
@@ -46,7 +46,7 @@ def init():
     return listener
 ```
 
-### Data management
+## Data management
 
 To save keypress data between app restarts, I need to store it in persistent file storage rather than variables, which get cleared when the process is killed. I did this by storing all the data within a `JSON` database and parse this into a **Python dictionary** via the `json` module.
 
@@ -83,7 +83,7 @@ def init():
     threading.Thread(target=saveDB, daemon=True).start()
 ```
 
-### Menubar Item
+## Menubar Item
 
 This part is quite easy in comparison; I just had to call the `backend.init()` function when initialising the Rumps application, and periodically fetch the new counter data via `backend.getDB()` function, then pass the total count to the renderer that updates the counter displayed in the menubar.
 
@@ -108,7 +108,7 @@ class muyuApp (rumps.App):
         self.title = parsedTitle
 ```
 
-### Plotting Keypresses
+## Plotting Keypresses
 
 I thought it would be quite interesting to plot a distribution of keypresses on a bar chart, showing which keys were pressed the most. Data plotting is done inside `graph.py` using the `matplotlib` library. I ignored the click values for modifier keys (e.g. **⌘, ^**) and the total amount in the graph by not including any data containing `Key.` their identifier and excluding the `total` field.
 
@@ -130,7 +130,7 @@ def plotKeyboard(db):
 
 * * *
 
-## Interesting Finds
+# Interesting Finds
 
 The tool generated an Interesting graph based on keypresses across 3700 presses _(Fig. 1)_ that demonstrates a strong correlation with the frequency of English letters in dictionaries (Fig. 2).
 
@@ -146,7 +146,7 @@ Credit: Wiki-Commons
 
 * * *
 
-## Wrap Up
+# Wrap Up
 
 Overall, making this was interesting. I learnt how to use `pynput` to handle system-wide keypresses, how to make a simple menubar application using `rumps` and also basic graphing using `matplotlib` .
 

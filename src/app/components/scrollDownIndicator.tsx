@@ -12,7 +12,7 @@ export default function ScrollIndicator() {
 				aria-label="Scroll to projects"
 				className="cursor-pointer p-4 rounded-full"
 				onClick={() => {
-					console.log("TEST");
+					// console.log("TEST");
 					const projectsSection = document.getElementById("projects");
 					if (projectsSection) {
 						projectsSection.scrollIntoView({

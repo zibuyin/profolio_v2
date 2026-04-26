@@ -13,6 +13,7 @@ import path from "path";
 import loadMd from "@/utils/loadMd";
 import type { Metadata, ResolvingMetadata } from "next";
 import remarkDirective from "remark-directive";
+import TOC from "../../components/toc";
 
 type generateMetadataProps = {
 	params: Promise<{ slug: string }>;
@@ -56,6 +57,7 @@ export default async function Page(props: {
 	const params = await props.params;
 
 	const source = loadFile(params.slug);
+	const mdPath = `content/project/md/${params.slug}.mdx`;
 	const { frontmatter, content } = await compileMDX<{
 		title: string;
 		date: string;
@@ -94,19 +96,21 @@ export default async function Page(props: {
 					/>
 				</Link>
 			</div>
-
-			<div className="pt-[100px]">
-				<h1 className="title text-3xl xl:text-5xl font-bold mb-1.5">
-					{frontmatter.title}
-				</h1>
-				<h2 className="date xl:text-xl font-bold">
-					{frontmatter.date}
-					{frontmatter.author ? ` • ${frontmatter.author}` : ""}
-				</h2>
-				<div className="bg-gray-500 w-full h-[1px] mt-3 mb-5"></div>
-				<div className="post-content">{content}</div>
-				<div className="bg-gray-500 w-full h-[1px] mt-10 mb-5"></div>
-				<Comments />
+			<div className="flex flex-row-reverse">
+				<TOC path={mdPath}></TOC>
+				<div className="pt-[100px]">
+					<h1 className="title text-3xl xl:text-5xl font-bold mb-1.5">
+						{frontmatter.title}
+					</h1>
+					<h2 className="date xl:text-xl font-bold">
+						{frontmatter.date}
+						{frontmatter.author ? ` • ${frontmatter.author}` : ""}
+					</h2>
+					<div className="bg-gray-500 w-full h-[1px] mt-3 mb-5"></div>
+					<div className="post-content">{content}</div>
+					<div className="bg-gray-500 w-full h-[1px] mt-10 mb-5"></div>
+					<Comments />
+				</div>
 			</div>
 		</div>
 	);
