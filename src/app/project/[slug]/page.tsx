@@ -14,6 +14,11 @@ import loadMd from "@/utils/loadMd";
 import type { Metadata, ResolvingMetadata } from "next";
 import remarkDirective from "remark-directive";
 import TOC from "../../components/toc";
+import type { TocNode } from "../../components/toc";
+import loadToc from "@/utils/remarkToc";
+import { LuTableOfContents } from "react-icons/lu";
+import { IoListCircle } from "react-icons/io5";
+import StickyTocWrapper from "../../components/StickyTocWrapper";
 
 type generateMetadataProps = {
 	params: Promise<{ slug: string }>;
@@ -58,6 +63,7 @@ export default async function Page(props: {
 
 	const source = loadFile(params.slug);
 	const mdPath = `content/project/md/${params.slug}.mdx`;
+	const tocNodes = loadToc(mdPath) as TocNode[];
 	const { frontmatter, content } = await compileMDX<{
 		title: string;
 		date: string;
@@ -83,7 +89,17 @@ export default async function Page(props: {
 	});
 
 	return (
-		<div className="pl-[30px] pr-[30px] xl:pl-[25vw] xl:pr-[25vw]">
+		<div className="relative pl-[30px] pr-[30px] xl:pl-[25vw] xl:pr-[25vw]">
+			{/* Sticky TOC sidebar */}
+			<StickyTocWrapper initialTop={265} fixedTop={96} right={40}>
+				<div className="border border-gray-300 dark:border-gray-600 rounded-2xl p-4 bg-white/80 dark:bg-zinc-900/80 backdrop-blur-sm">
+					<p className="text-sm font-bold mb-3 flex flex-row items-center gap-2">
+						<LuTableOfContents />
+						In This Article
+					</p>
+					<TOC nodes={tocNodes} />
+				</div>
+			</StickyTocWrapper>
 			<div className="back-btn mt-10 w-fit h-fit">
 				<Link
 					href="/#projects"
@@ -96,21 +112,18 @@ export default async function Page(props: {
 					/>
 				</Link>
 			</div>
-			<div className="flex flex-row-reverse">
-				<TOC path={mdPath}></TOC>
-				<div className="pt-[100px]">
-					<h1 className="title text-3xl xl:text-5xl font-bold mb-1.5">
-						{frontmatter.title}
-					</h1>
-					<h2 className="date xl:text-xl font-bold">
-						{frontmatter.date}
-						{frontmatter.author ? ` • ${frontmatter.author}` : ""}
-					</h2>
-					<div className="bg-gray-500 w-full h-[1px] mt-3 mb-5"></div>
-					<div className="post-content">{content}</div>
-					<div className="bg-gray-500 w-full h-[1px] mt-10 mb-5"></div>
-					<Comments />
-				</div>
+			<div className="pt-[100px]">
+				<h1 className="title text-3xl xl:text-5xl font-bold mb-1.5">
+					{frontmatter.title}
+				</h1>
+				<h2 className="date xl:text-xl font-bold">
+					{frontmatter.date}
+					{frontmatter.author ? ` • ${frontmatter.author}` : ""}
+				</h2>
+				<div className="bg-gray-500 w-full h-[1px] mt-3 mb-5"></div>
+				<div className="post-content">{content}</div>
+				<div className="bg-gray-500 w-full h-[1px] mt-10 mb-5"></div>
+				<Comments />
 			</div>
 		</div>
 	);

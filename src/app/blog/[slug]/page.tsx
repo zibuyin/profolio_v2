@@ -13,6 +13,10 @@ import path from "path";
 import type { Metadata, ResolvingMetadata } from "next";
 import remarkDirective from "remark-directive";
 import loadMd from "@/utils/loadMd";
+import TOC from "@/src/app/components/toc";
+import type { TocNode } from "@/src/app/components/toc";
+import loadToc from "@/utils/remarkToc";
+import { LuTableOfContents } from "react-icons/lu";
 type generateMetadataProps = {
 	params: Promise<{ slug: string }>;
 	searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
@@ -53,7 +57,9 @@ export default async function Page(props: {
 	params: Promise<{ slug: string }>;
 }) {
 	const params = await props.params;
+	const mdPath = `content/blog/md/${params.slug}.mdx`;
 	const source = loadFile(params.slug);
+	const tocNodes = loadToc(mdPath) as TocNode[];
 	const { frontmatter, content } = await compileMDX<{
 		title: string;
 		date: string;
@@ -80,6 +86,16 @@ export default async function Page(props: {
 
 	return (
 		<div className="pl-[30px] pr-[30px] xl:pl-[25vw] xl:pr-[25vw]">
+			{/* Sticky TOC sidebar */}
+			<div className="fixed top-24 right-6 w-56 hidden xl:block z-50">
+				<div className="border border-gray-300 dark:border-gray-600 rounded-2xl p-4 bg-white/80 dark:bg-zinc-900/80 backdrop-blur-sm">
+					<p className="text-sm font-bold mb-3 flex flex-row items-center gap-2">
+						<LuTableOfContents />
+						In This Article
+					</p>
+					<TOC nodes={tocNodes} />
+				</div>
+			</div>
 			<div className="back-btn mt-10 w-fit h-fit">
 				<Link
 					href="/#blog"

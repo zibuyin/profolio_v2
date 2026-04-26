@@ -259,10 +259,99 @@ footer {
 /* , Arial, Helvetica, sans-serif */
 
 /* TOC */
-h1.toc-item {
-  color: red;
+
+.toc-wrapper {
+  display: flex;
+  flex-direction: row;
+  gap: 0.75rem;
 }
 
+.toc-track {
+  position: relative;
+  width: 2px;
+  background: #d1d5db;
+  border-radius: 9999px;
+  flex-shrink: 0;
+}
+
+@media (prefers-color-scheme: dark) {
+  .toc-track {
+    background: #374151;
+  }
+}
+
+.toc-thumb {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  width: 8px;
+  height: 8px;
+  border-radius: 9999px;
+  background: #3b82f6;
+  transition: top 0.2s ease;
+}
+
+.toc-element-wrapper {
+  height: fit-content;
+  width: fit-content;
+}
+
+.toc-btn {
+  display: block;
+  text-align: left;
+  width: 100%;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.toc-item {
+  white-space: nowrap;
+  transition: color 0.15s;
+  color: #6b7280;
+}
+
+.toc-btn:hover .toc-item {
+  color: #111827;
+}
+
+@media (prefers-color-scheme: dark) {
+  .toc-item {
+    color: #9ca3af;
+  }
+
+  .toc-btn:hover .toc-item {
+    color: #ffffff;
+  }
+}
+
+.toc-btn.toc-active .toc-item {
+  color: #3b82f6;
+}
+
+@media (prefers-color-scheme: dark) {
+  .toc-btn.toc-active .toc-item {
+    color: #60a5fa;
+  }
+}
+
+h1.toc-item {
+  font-size: 1.1rem;
+  font-weight: 600;
+  padding: 5px 0;
+}
+
+h2.toc-item {
+  font-size: 0.8rem;
+  font-weight: 500;
+  padding: 3px 0;
+}
+
+h3.toc-item {
+  font-size: 0.75rem;
+  font-weight: 400;
+  padding: 2px 0;
+}
 
 /* width */
 ::-webkit-scrollbar {
@@ -286,4 +375,8 @@ h1.toc-item {
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
+}
+
+body {
+  cursor: none;
 }
