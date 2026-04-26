@@ -19,6 +19,7 @@ import loadToc from "@/utils/remarkToc";
 import { LuTableOfContents } from "react-icons/lu";
 import { IoListCircle } from "react-icons/io5";
 import StickyTocWrapper from "../../components/StickyTocWrapper";
+import MusicCard from "../../components/musicCard";
 
 type generateMetadataProps = {
 	params: Promise<{ slug: string }>;
@@ -78,6 +79,7 @@ export default async function Page(props: {
 		},
 		components: {
 			Model,
+			MusicCard,
 			code: (props) => <CodeBlock {...props} />,
 			h1: makeHeading("h1"),
 			h2: makeHeading("h2"),

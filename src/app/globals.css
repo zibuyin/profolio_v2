@@ -4,9 +4,11 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
-
+  --accent: oklch(74.6% 0.16 232.661);
   overscroll-behavior: none;
 }
+
+
 
 
 @media (prefers-color-scheme: dark) {
@@ -103,20 +105,20 @@ footer {
 
 .post-content li::marker,
 .tiptap-editor .ProseMirror li::marker {
-  color: oklch(74.6% 0.16 232.661);
+  color: var(--accent);
   /* font-size: 1.2em; */
   font-weight: bold;
 }
 
 .post-content a,
 .tiptap-editor .ProseMirror a {
-  color: oklch(74.6% 0.16 232.661);
+  color: var(--accent);
   text-decoration: none;
 }
 
 .post-content strong,
 .tiptap-editor .ProseMirror strong {
-  color: oklch(74.6% 0.16 232.661)
+  color: var(--accent)
 }
 
 .post-content a:hover,
@@ -162,7 +164,8 @@ footer {
 
 .post-content blockquote,
 .tiptap-editor .ProseMirror blockquote {
-  border-left: 4px solid oklch(74.6% 0.16 232.661);
+  /* sky-400 */
+  border-left: 4px solid var(--accent);
   padding-left: 1rem;
   font-style: italic;
   /* color: #4b5563; */
@@ -287,7 +290,7 @@ footer {
   width: 8px;
   height: 8px;
   border-radius: 9999px;
-  background: #3b82f6;
+  background: var(--accent);
   transition: top 0.2s ease;
 }
 
@@ -326,12 +329,12 @@ footer {
 }
 
 .toc-btn.toc-active .toc-item {
-  color: #3b82f6;
+  color: var(--accent);
 }
 
 @media (prefers-color-scheme: dark) {
   .toc-btn.toc-active .toc-item {
-    color: #60a5fa;
+    color: var(--accent);
   }
 }
 
@@ -375,8 +378,4 @@ h3.toc-item {
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
-}
-
-body {
-  cursor: none;
 }
