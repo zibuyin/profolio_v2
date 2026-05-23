@@ -26,7 +26,7 @@ export default function ProjectCard({
 		<div>
 			<div className="flex flex-col-reverse xl:flex-row justify-between">
 				<div className="text-section text-center md:text-left">
-					<h2 className="text-2xl md:text-3xl font-semibold">
+					<h2 className="text-2xl md:text-3xl font-semibold mb-5">
 						{title}
 					</h2>
 					<p className="mt-2 xl:mr-35">{description}</p>
@@ -60,7 +60,7 @@ export default function ProjectCard({
 							src={imagePath}
 							alt={title}
 							referrerPolicy="no-referrer"
-							className="mx-auto xl:ml-40 w-auto h-70"
+							className="min-w-80 max-w-80 h-auton rounded-xl"
 						/>
 					) : (
 						<p className="text-gray-500">No preview available</p>

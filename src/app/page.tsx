@@ -65,25 +65,25 @@ export default function Home() {
 				</div>
 
 				<div className="pt-[90vh] mt-[0vh] bg-gradient-to-b from-transparent dark:via-[#0a0a0a] dark:to-[#0a0a0a] via-zinc-50 to-zinc-50 z-10 relative pointer-events-none">
+					<section id="about" className="pointer-events-auto">
+						<div className="h-50"></div>
+						<AboutMe></AboutMe>
+					</section>
+
 					<section id="projects" className="pointer-events-auto">
-						<div className="h-30"></div>
+						<div className="h-50"></div>
 
 						<Projects></Projects>
 					</section>
 
 					{/* Small padding */}
 
-					<section id="about" className="pointer-events-auto">
-						<div className="h-30"></div>
-						<AboutMe></AboutMe>
-					</section>
-
 					<section id="blog" className="pointer-events-auto">
-						<div className="h-30"></div>
+						<div className="h-50"></div>
 						<BlogSection></BlogSection>
 					</section>
 					<section id="contacts" className="pointer-events-auto">
-						<div className="h-30"></div>
+						<div className="h-50"></div>
 						<Contacts></Contacts>
 					</section>
 				</div>
