@@ -12,7 +12,8 @@ export default function ScrollIndicator() {
 			const viewportHeight = Math.max(window.innerHeight, 1);
 			const fadeStart = viewportHeight * 0.08;
 			const fadeEnd = viewportHeight * 0.55;
-			const rawProgress = (window.scrollY - fadeStart) / (fadeEnd - fadeStart);
+			const rawProgress =
+				(window.scrollY - fadeStart) / (fadeEnd - fadeStart);
 			const clampedProgress = Math.max(0, Math.min(1, rawProgress));
 
 			setScrollProgress((previous) => {
