@@ -12,8 +12,8 @@ import Comments from "./components/giscus";
 import BlogSection from "./ui/blogSection";
 import Contacts from "./ui/contactsSection";
 import CopyDetection from "./ui/copyDetection";
+import Heatmap from "./ui/heatmap";
 
-let currentY = 0;
 // Function to get current scroll distances
 function getScrollDistance() {
 	// For cross-browser compatibility, use both documentElement and body
@@ -69,15 +69,12 @@ export default function Home() {
 						<div className="h-50"></div>
 						<AboutMe></AboutMe>
 					</section>
-
 					<section id="projects" className="pointer-events-auto">
 						<div className="h-50"></div>
 
 						<Projects></Projects>
 					</section>
-
 					{/* Small padding */}
-
 					<section id="blog" className="pointer-events-auto">
 						<div className="h-50"></div>
 						<BlogSection></BlogSection>
@@ -86,6 +83,7 @@ export default function Home() {
 						<div className="h-50"></div>
 						<Contacts></Contacts>
 					</section>
+					<Heatmap></Heatmap>
 				</div>
 			</main>
 		</div>

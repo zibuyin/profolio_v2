@@ -39,7 +39,9 @@ export default function Footer() {
 					: "h-[5vh] bg-zinc-50 dark:bg-black z-888 pt-[7vh] pb-[7vh] pl-[20px] pr-[20px] xl:ml-[15vw] xl:mr-[15vw] flex flex-row justify-between items-center"
 			}
 		>
-			<a href="https://github.com/zibuyin/profolio_v2">
+			<a
+				href={`https://github.com/zibuyin/profolio_v2/commit/${process.env.NEXT_PUBLIC_GIT_HASH}`}
+			>
 				<p className="text-gray-500">
 					<FontAwesomeIcon icon={faCodeCommit} />{" "}
 					{process.env.NEXT_PUBLIC_GIT_HASH} - {lastUpdated}
